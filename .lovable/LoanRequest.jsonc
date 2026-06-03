@@ -1,0 +1,123 @@
+{
+  "name": "Kund",
+  "type": "object",
+  "properties": {
+    "namn": {
+      "type": "string",
+      "description": "Kundnamn"
+    },
+    "typ": {
+      "type": "string",
+      "enum": [
+        "Cemi",
+        "PHM",
+        "\u00d6vrig",
+        "BRF",
+        "Kommersiella",
+        "Koncernbolag",
+        "Internt"
+      ],
+      "description": "Kundtyp"
+    },
+    "projektnummer": {
+      "type": "string",
+      "description": "Projektnummer eller projektnamn"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "aktiv",
+        "inaktiv"
+      ],
+      "default": "aktiv",
+      "description": "Kund aktiv eller inaktiv"
+    }
+  },
+  "required": [
+    "namn",
+    "typ"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin_lokalv\u00e5rd"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "lokalv\u00e5rdare"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin_lokalv\u00e5rd"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin_lokalv\u00e5rd"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin_lokalv\u00e5rd"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        }
+      ]
+    }
+  }
+}

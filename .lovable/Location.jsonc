@@ -1,0 +1,258 @@
+{
+  "name": "LoanRequest",
+  "type": "object",
+  "properties": {
+    "tool_ids": {
+      "type": "array",
+      "description": "IDs of tools being requested for loan",
+      "items": {
+        "type": "string"
+      }
+    },
+    "tool_names": {
+      "type": "array",
+      "description": "Names of tools being requested",
+      "items": {
+        "type": "string"
+      }
+    },
+    "tool_details": {
+      "type": "array",
+      "description": "Detailed information about each tool including individual return dates",
+      "items": {
+        "type": "object",
+        "properties": {
+          "tool_id": {
+            "type": "string"
+          },
+          "tool_name": {
+            "type": "string"
+          },
+          "location_id": {
+            "type": "string"
+          },
+          "location_name": {
+            "type": "string"
+          },
+          "return_date": {
+            "type": "string",
+            "format": "date"
+          }
+        },
+        "required": [
+          "tool_id",
+          "tool_name"
+        ]
+      }
+    },
+    "requested_by_email": {
+      "type": "string",
+      "description": "Email of person requesting the loan"
+    },
+    "requested_by_name": {
+      "type": "string",
+      "description": "Name of person requesting the loan"
+    },
+    "assigned_to_email": {
+      "type": "string",
+      "description": "Email of person who will use the tools"
+    },
+    "assigned_to_name": {
+      "type": "string",
+      "description": "Name of person who will use the tools"
+    },
+    "destination_location_id": {
+      "type": "string",
+      "description": "Where the tools will be loaned to"
+    },
+    "destination_location_name": {
+      "type": "string"
+    },
+    "default_return_date": {
+      "type": "string",
+      "format": "date",
+      "description": "Default return date for all tools (can be overridden per tool)"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "approved",
+        "rejected",
+        "pending_return",
+        "returned"
+      ],
+      "default": "pending",
+      "description": "Request status"
+    },
+    "approver_email": {
+      "type": "string",
+      "description": "Email of person responsible for the location (approver)"
+    },
+    "approver_name": {
+      "type": "string"
+    },
+    "approval_date": {
+      "type": "string",
+      "format": "date-time",
+      "nullable": true
+    },
+    "approver_comment": {
+      "type": "string",
+      "description": "Comment from approver"
+    },
+    "requester_comment": {
+      "type": "string",
+      "description": "Comment from person requesting loan"
+    },
+    "destination_location_manager_email": {
+      "type": "string",
+      "description": "Email of person responsible for destination location"
+    },
+    "destination_location_manager_name": {
+      "type": "string"
+    },
+    "is_extension_request": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether this is an extension request"
+    },
+    "original_request_id": {
+      "type": "string",
+      "nullable": true,
+      "description": "ID of original request if this is an extension"
+    },
+    "returned_date": {
+      "type": "string",
+      "format": "date-time",
+      "nullable": true
+    },
+    "return_confirmed_by_name": {
+      "type": "string",
+      "nullable": true,
+      "description": "Name of person who confirmed receipt of returned tools"
+    },
+    "return_confirmed_date": {
+      "type": "string",
+      "format": "date-time",
+      "nullable": true
+    }
+  },
+  "required": [
+    "tool_ids",
+    "requested_by_email",
+    "assigned_to_email",
+    "destination_location_id",
+    "default_return_date",
+    "approver_email"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "verktygsf\u00f6rvaltare"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin_lokalv\u00e5rd"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        },
+        {
+          "created_by": "{{user.email}}"
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "verktygsf\u00f6rvaltare"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin_lokalv\u00e5rd"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        },
+        {
+          "requested_by_email": "{{user.email}}"
+        },
+        {
+          "assigned_to_email": "{{user.email}}"
+        },
+        {
+          "approver_email": "{{user.email}}"
+        },
+        {
+          "destination_location_manager_email": "{{user.email}}"
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "verktygsf\u00f6rvaltare"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin_lokalv\u00e5rd"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        },
+        {
+          "requested_by_email": "{{user.email}}",
+          "data.status": "pending"
+        },
+        {
+          "approver_email": "{{user.email}}"
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        },
+        {
+          "created_by": "{{user.email}}",
+          "data.status": "pending"
+        }
+      ]
+    }
+  }
+}

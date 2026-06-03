@@ -1,0 +1,158 @@
+{
+  "name": "LokalvardsArtikel",
+  "type": "object",
+  "properties": {
+    "benamning": {
+      "type": "string",
+      "description": "Artikelns ben\u00e4mning"
+    },
+    "artikelnummer": {
+      "type": "string",
+      "description": "Unikt artikelnummer"
+    },
+    "streckkod": {
+      "type": "string",
+      "description": "Unik streckkod"
+    },
+    "old_streckkod": {
+      "type": "string",
+      "nullable": true,
+      "description": "Tidigare streckkod"
+    },
+    "pris": {
+      "type": "number",
+      "description": "Pris per enhet"
+    },
+    "inkopsdatum": {
+      "type": "string",
+      "format": "date",
+      "description": "Datum d\u00e5 artikeln k\u00f6ptes in"
+    },
+    "antal_inkopta": {
+      "type": "integer",
+      "description": "Totalt antal ink\u00f6pta enheter"
+    },
+    "lagertroskelvarde": {
+      "type": "integer",
+      "description": "L\u00e4gsta antal i lager innan best\u00e4llning kr\u00e4vs",
+      "default": 10
+    },
+    "utgaende": {
+      "type": "boolean",
+      "default": false,
+      "description": "Indikerar om artikeln \u00e4r utg\u00e5ende"
+    },
+    "current_quantity": {
+      "type": "number",
+      "description": "Aktuellt antal i lager",
+      "default": 0
+    },
+    "subcategory": {
+      "type": "string",
+      "nullable": true,
+      "description": "Underkategori f\u00f6r artikeln"
+    },
+    "is_deleted": {
+      "type": "boolean",
+      "default": false,
+      "description": "Mjukradering \u2013 visas i papperskorg"
+    },
+    "deleted_at": {
+      "type": "string",
+      "format": "date-time",
+      "nullable": true,
+      "description": "Tidpunkt f\u00f6r mjukradering"
+    }
+  },
+  "required": [
+    "benamning",
+    "streckkod",
+    "pris",
+    "inkopsdatum",
+    "antal_inkopta",
+    "lagertroskelvarde"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin_lokalv\u00e5rd"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "lokalv\u00e5rdare"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin_lokalv\u00e5rd"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin_lokalv\u00e5rd"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin_lokalv\u00e5rd"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        }
+      ]
+    }
+  }
+}

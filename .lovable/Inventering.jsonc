@@ -1,0 +1,134 @@
+{
+  "name": "Huvudmaskin",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Projektnamn/nummer"
+    },
+    "typ": {
+      "type": "string",
+      "enum": [
+        "Traktor",
+        "Redskapsb\u00e4rare",
+        "Hjullastare",
+        "Gr\u00e4vmaskin",
+        "Lastbil",
+        "Minidumper",
+        "\u00d6vrigt"
+      ],
+      "description": "Maskintyp"
+    },
+    "manufacturer": {
+      "type": "string",
+      "description": "Tillverkare"
+    },
+    "model": {
+      "type": "string",
+      "description": "Modell"
+    },
+    "year_model": {
+      "type": "number",
+      "description": "\u00c5rsmodell"
+    },
+    "registration_number": {
+      "type": "string",
+      "description": "Regnummer"
+    },
+    "project_number": {
+      "type": "string",
+      "description": "Projektnummer"
+    },
+    "location_id": {
+      "type": "string",
+      "description": "Referens till Location-entiteten"
+    },
+    "location_name": {
+      "type": "string"
+    },
+    "notes": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "name"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin_lokalv\u00e5rd"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin_lokalv\u00e5rd"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin_lokalv\u00e5rd"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin_lokalv\u00e5rd"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        }
+      ]
+    }
+  }
+}

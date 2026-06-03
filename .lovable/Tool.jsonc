@@ -1,0 +1,103 @@
+{
+  "name": "TeamMember",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "email": {
+      "type": "string"
+    },
+    "phone": {
+      "type": "string"
+    },
+    "role": {
+      "type": "string",
+      "enum": [
+        "technician",
+        "apprentice",
+        "contractor",
+        "admin lokalv\u00e5rd",
+        "lokalv\u00e5rdare",
+        "verktygsf\u00f6rvaltare",
+        "admin",
+        "\u00e4gare"
+      ],
+      "default": "lokalv\u00e5rdare"
+    },
+    "default_location_id": {
+      "type": "string"
+    },
+    "default_location_name": {
+      "type": "string"
+    },
+    "location_ids": {
+      "type": "array",
+      "description": "IDs of locations where this team member works",
+      "items": {
+        "type": "string"
+      }
+    },
+    "location_names": {
+      "type": "array",
+      "description": "Names of locations where this team member works",
+      "items": {
+        "type": "string"
+      }
+    },
+    "is_active": {
+      "type": "boolean",
+      "default": true
+    },
+    "avatar_url": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "name"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": {
+      "$or": [
+        {
+          "email": "{{user.email}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "verktygsf\u00f6rvaltare"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin_lokalv\u00e5rd"
+          }
+        }
+      ]
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

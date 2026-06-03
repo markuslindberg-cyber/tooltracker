@@ -1,0 +1,136 @@
+{
+  "name": "InventoryReport",
+  "type": "object",
+  "properties": {
+    "location_name": {
+      "type": "string"
+    },
+    "location_id": {
+      "type": "string"
+    },
+    "tool_type": {
+      "type": "string",
+      "description": "tools | handtools | both"
+    },
+    "mode": {
+      "type": "string",
+      "description": "location | open"
+    },
+    "performed_by_name": {
+      "type": "string"
+    },
+    "performed_by_email": {
+      "type": "string"
+    },
+    "performed_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "total_items": {
+      "type": "number"
+    },
+    "checked_items": {
+      "type": "number"
+    },
+    "unchecked_items": {
+      "type": "number"
+    },
+    "checked_list": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          },
+          "category": {
+            "type": "string"
+          },
+          "barcode": {
+            "type": "string"
+          },
+          "location_name": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "condition": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "unchecked_list": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          },
+          "category": {
+            "type": "string"
+          },
+          "barcode": {
+            "type": "string"
+          },
+          "location_name": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  },
+  "required": [
+    "performed_at",
+    "total_items",
+    "checked_items"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "verktygsf\u00f6rvaltare"
+          }
+        }
+      ]
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

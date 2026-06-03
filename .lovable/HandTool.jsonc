@@ -1,0 +1,50 @@
+{
+  "name": "GlobalAppConfig",
+  "type": "object",
+  "properties": {
+    "config_key": {
+      "type": "string",
+      "description": "Unik nyckel f\u00f6r konfigurationen, t.ex. 'dashboard_layout' eller 'navigation_order'"
+    },
+    "config_value": {
+      "type": "object",
+      "description": "Konfigurationsv\u00e4rdet som JSON-objekt",
+      "additionalProperties": true
+    }
+  },
+  "required": [
+    "config_key",
+    "config_value"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "\u00e4gare"
+      }
+    },
+    "read": {
+      "user_condition": {
+        "$exists": true
+      }
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "user_condition": {
+        "role": "\u00e4gare"
+      }
+    }
+  }
+}

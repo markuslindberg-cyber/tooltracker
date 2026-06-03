@@ -1,0 +1,56 @@
+{
+  "name": "RolePermission",
+  "type": "object",
+  "properties": {
+    "role_name": {
+      "type": "string",
+      "description": "Namnet p\u00e5 rollen"
+    },
+    "entity_name": {
+      "type": "string",
+      "description": "Namnet p\u00e5 entiteten"
+    },
+    "can_create": {
+      "type": "boolean",
+      "default": false
+    },
+    "can_read": {
+      "type": "boolean",
+      "default": false
+    },
+    "can_update": {
+      "type": "boolean",
+      "default": false
+    },
+    "can_delete": {
+      "type": "boolean",
+      "default": false
+    }
+  },
+  "required": [
+    "role_name",
+    "entity_name"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "\u00e4gare"
+      }
+    },
+    "read": {
+      "user_condition": {
+        "role": "\u00e4gare"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "\u00e4gare"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "\u00e4gare"
+      }
+    }
+  }
+}

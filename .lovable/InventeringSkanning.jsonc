@@ -1,0 +1,132 @@
+{
+  "name": "Inventering",
+  "type": "object",
+  "properties": {
+    "datum": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Datum och tid f\u00f6r inventeringen"
+    },
+    "personal_id": {
+      "type": "string",
+      "description": "ID f\u00f6r personalen som gjorde inventeringen (referens till TeamMember)"
+    },
+    "personal_namn": {
+      "type": "string",
+      "description": "Namn p\u00e5 personalen som gjorde inventeringen"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "p\u00e5g\u00e5ende",
+        "avslutad",
+        "pausad"
+      ],
+      "default": "p\u00e5g\u00e5ende",
+      "description": "Status f\u00f6r inventeringen"
+    },
+    "scanningar": {
+      "type": "array",
+      "description": "Lista \u00f6ver alla skanningar som gjordes under inventeringen",
+      "items": {
+        "type": "object",
+        "properties": {
+          "scanning_id": {
+            "type": "string",
+            "description": "ID f\u00f6r scanningstillf\u00e4llet"
+          },
+          "artikel_id": {
+            "type": "string",
+            "description": "ID f\u00f6r den skannade artikeln"
+          },
+          "artikel_namn": {
+            "type": "string",
+            "description": "Namn p\u00e5 den skannade artikeln"
+          },
+          "streckkod": {
+            "type": "string",
+            "description": "Streckkoden som skannades"
+          },
+          "scannad_antal": {
+            "type": "number",
+            "description": "Antal som registrerades vid skanningen"
+          },
+          "scan_tid": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Tiden d\u00e5 skanningen genomf\u00f6rdes"
+          }
+        },
+        "required": [
+          "scanning_id",
+          "artikel_id",
+          "artikel_namn",
+          "streckkod",
+          "scannad_antal",
+          "scan_tid"
+        ]
+      }
+    },
+    "anteckningar": {
+      "type": "string",
+      "description": "Eventuella anteckningar eller observationer fr\u00e5n inventeringen",
+      "nullable": true
+    }
+  },
+  "required": [
+    "datum",
+    "personal_id",
+    "personal_namn",
+    "status",
+    "scanningar"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "user_condition": {
+        "role": "\u00e4gare"
+      }
+    }
+  }
+}

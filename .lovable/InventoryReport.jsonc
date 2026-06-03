@@ -1,0 +1,122 @@
+{
+  "name": "InventeringSkanning",
+  "type": "object",
+  "properties": {
+    "inventering_id": {
+      "type": "string",
+      "description": "Referens till Inventering-entiteten"
+    },
+    "artikel_id": {
+      "type": "string",
+      "description": "ID f\u00f6r den skannade artikeln (referens till LokalvardsArtikel)"
+    },
+    "artikel_namn": {
+      "type": "string",
+      "description": "Namn p\u00e5 den skannade artikeln"
+    },
+    "streckkod": {
+      "type": "string",
+      "description": "Streckkoden som skannades"
+    },
+    "scannad_antal": {
+      "type": "number",
+      "description": "Antal som registrerades vid skanningen"
+    },
+    "registrerad_tid": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Tiden d\u00e5 skanningen gjordes"
+    },
+    "scannad_av_email": {
+      "type": "string",
+      "description": "Email p\u00e5 personalen som scannadeartikeln"
+    },
+    "scannad_av_namn": {
+      "type": "string",
+      "description": "Namn p\u00e5 personalen som skannade artikeln"
+    },
+    "anteckningar": {
+      "type": "string",
+      "description": "Eventuella anteckningar f\u00f6r denna scan",
+      "nullable": true
+    }
+  },
+  "required": [
+    "inventering_id",
+    "artikel_id",
+    "artikel_namn",
+    "streckkod",
+    "scannad_antal",
+    "registrerad_tid",
+    "scannad_av_email",
+    "scannad_av_namn"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "verktygsf\u00f6rvaltare"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "verktygsf\u00f6rvaltare"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        }
+      ]
+    }
+  }
+}

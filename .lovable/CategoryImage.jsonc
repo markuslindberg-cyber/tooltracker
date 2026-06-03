@@ -1,0 +1,103 @@
+{
+  "name": "Category",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Kategorinamn"
+    },
+    "entity_type": {
+      "type": "string",
+      "description": "Vilken entitet kategorin tillh\u00f6r, t.ex. Tool, HandTool, Arbetskl\u00e4derUtrustning, LokalvardsArtikel",
+      "enum": [
+        "Tool",
+        "HandTool",
+        "Arbetskl\u00e4derUtrustning",
+        "LokalvardsArtikel"
+      ]
+    },
+    "subcategories": {
+      "type": "array",
+      "description": "Lista \u00f6ver underkategorier som anv\u00e4nds under denna kategori",
+      "items": {
+        "type": "string"
+      }
+    },
+    "page_label": {
+      "type": "string",
+      "description": "Sidnamn i appen d\u00e4r denna kategori visas"
+    }
+  },
+  "required": [
+    "name",
+    "entity_type"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "verktygsf\u00f6rvaltare"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin_lokalv\u00e5rd"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        }
+      ]
+    }
+  }
+}

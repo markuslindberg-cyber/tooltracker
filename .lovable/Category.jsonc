@@ -1,0 +1,182 @@
+{
+  "name": "Arbetskl\u00e4derUtrustning",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Namn p\u00e5 arbetskl\u00e4der/utrustning"
+    },
+    "manufacturer": {
+      "type": "string",
+      "description": "Tillverkare/m\u00e4rke"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "Arbetskl\u00e4der varsel",
+        "Arbetskl\u00e4der",
+        "Skor",
+        "Skyddsutrustning"
+      ],
+      "description": "Huvudkategori"
+    },
+    "subcategory": {
+      "type": "string",
+      "description": "Typ av plagg/utrustning"
+    },
+    "size": {
+      "type": "string",
+      "enum": [
+        "XXL",
+        "XL",
+        "L",
+        "M",
+        "S",
+        "XS",
+        "XXS"
+      ],
+      "description": "Storlek"
+    },
+    "quantity": {
+      "type": "number",
+      "description": "Antal"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "i_lager",
+        "i_bruk",
+        "saknas",
+        "kasserad"
+      ],
+      "default": "i_lager",
+      "description": "Nuvarande status"
+    },
+    "condition": {
+      "type": "string",
+      "enum": [
+        "ny",
+        "bra",
+        "okej",
+        "d\u00e5lig"
+      ],
+      "default": "bra",
+      "description": "Skick"
+    },
+    "location_id": {
+      "type": "string"
+    },
+    "location_name": {
+      "type": "string"
+    },
+    "purchase_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "purchase_price": {
+      "type": "number"
+    },
+    "barcode": {
+      "type": "string"
+    },
+    "image_url": {
+      "type": "string"
+    },
+    "notes": {
+      "type": "string"
+    },
+    "is_deleted": {
+      "type": "boolean",
+      "default": false,
+      "description": "Mjukradering \u2013 visas i papperskorg"
+    },
+    "deleted_at": {
+      "type": "string",
+      "format": "date-time",
+      "nullable": true,
+      "description": "Tidpunkt f\u00f6r mjukradering"
+    }
+  },
+  "required": [
+    "name",
+    "category"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin_lokalv\u00e5rd"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin_lokalv\u00e5rd"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin_lokalv\u00e5rd"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin_lokalv\u00e5rd"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        }
+      ]
+    }
+  }
+}

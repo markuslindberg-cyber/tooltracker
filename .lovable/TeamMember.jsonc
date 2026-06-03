@@ -1,0 +1,115 @@
+{
+  "name": "SpreadsheetCell",
+  "type": "object",
+  "properties": {
+    "workbookId": {
+      "type": "string",
+      "description": "Referens till arbetsboken"
+    },
+    "sheetName": {
+      "type": "string",
+      "description": "Namn p\u00e5 kalkylbladet"
+    },
+    "row": {
+      "type": "number",
+      "description": "Radnummer (0-indexerat)"
+    },
+    "column": {
+      "type": "number",
+      "description": "Kolumnnummer (0-indexerat)"
+    },
+    "value": {
+      "type": "string",
+      "description": "Cellens r\u00e5v\u00e4rde"
+    },
+    "formula": {
+      "type": "string",
+      "description": "Formel om cellen inneh\u00e5ller en (t.ex. =SUM(A1:A10))"
+    },
+    "displayValue": {
+      "type": "string",
+      "description": "Det ber\u00e4knade/formaterade v\u00e4rdet att visa"
+    },
+    "format": {
+      "type": "string",
+      "enum": [
+        "general",
+        "currency",
+        "date",
+        "time",
+        "percentage",
+        "number"
+      ],
+      "default": "general",
+      "description": "Visningsformat"
+    },
+    "comment": {
+      "type": "string",
+      "description": "Kommentar p\u00e5 cellen"
+    }
+  },
+  "required": [
+    "workbookId",
+    "sheetName",
+    "row",
+    "column"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        }
+      ]
+    }
+  }
+}

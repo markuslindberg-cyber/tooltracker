@@ -1,0 +1,152 @@
+{
+  "name": "ServiceRecord",
+  "type": "object",
+  "properties": {
+    "tool_id": {
+      "type": "string",
+      "description": "Reference to Tool entity"
+    },
+    "tool_name": {
+      "type": "string"
+    },
+    "service_type": {
+      "type": "string",
+      "enum": [
+        "repair",
+        "maintenance",
+        "inspection",
+        "calibration",
+        "replacement_parts",
+        "annual_service"
+      ],
+      "description": "Type of service"
+    },
+    "cost": {
+      "type": "number",
+      "description": "Service cost"
+    },
+    "service_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "description": {
+      "type": "string",
+      "description": "Details of service performed"
+    },
+    "performed_by": {
+      "type": "string",
+      "description": "Person or company who performed service"
+    },
+    "invoice_number": {
+      "type": "string",
+      "description": "Invoice/receipt number (optional)"
+    },
+    "supplier": {
+      "type": "string",
+      "description": "Supplier/vendor name (optional)"
+    },
+    "notes": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "tool_id",
+    "tool_name",
+    "service_type",
+    "cost",
+    "service_date"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "verktygsf\u00f6rvaltare"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin_lokalv\u00e5rd"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "verktygsf\u00f6rvaltare"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin_lokalv\u00e5rd"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "verktygsf\u00f6rvaltare"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin_lokalv\u00e5rd"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin_lokalv\u00e5rd"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        }
+      ]
+    }
+  }
+}

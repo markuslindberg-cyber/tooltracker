@@ -1,0 +1,131 @@
+{
+  "name": "ServiceTemplate",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Namn p\u00e5 servicemallen"
+    },
+    "description": {
+      "type": "string",
+      "description": "Text om vad som utf\u00f6rts vid servicen"
+    },
+    "cost": {
+      "type": "number",
+      "description": "Kostnad f\u00f6r servicen"
+    },
+    "service_type": {
+      "type": "string",
+      "enum": [
+        "repair",
+        "maintenance",
+        "inspection",
+        "calibration",
+        "replacement_parts",
+        "annual_service"
+      ],
+      "description": "Typ av service"
+    },
+    "parts_used": {
+      "type": "array",
+      "description": "Lista \u00f6ver eventuella delar som anv\u00e4nds",
+      "items": {
+        "type": "object",
+        "properties": {
+          "part_name": {
+            "type": "string"
+          },
+          "quantity": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "part_name",
+          "quantity"
+        ]
+      }
+    }
+  },
+  "required": [
+    "name",
+    "service_type"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin_lokalv\u00e5rd"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin_lokalv\u00e5rd"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin_lokalv\u00e5rd"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin_lokalv\u00e5rd"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        }
+      ]
+    }
+  }
+}

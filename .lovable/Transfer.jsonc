@@ -1,0 +1,96 @@
+{
+  "name": "ToolLog",
+  "type": "object",
+  "properties": {
+    "tool_id": {
+      "type": "string",
+      "description": "Referens till Tool-entiteten"
+    },
+    "changed_by_email": {
+      "type": "string",
+      "description": "E-post f\u00f6r den som gjorde \u00e4ndringen"
+    },
+    "changed_by_name": {
+      "type": "string",
+      "description": "Namn p\u00e5 den som gjorde \u00e4ndringen"
+    },
+    "change_date": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Datum och tid f\u00f6r \u00e4ndringen"
+    },
+    "field_name": {
+      "type": "string",
+      "description": "Namn p\u00e5 f\u00e4ltet som \u00e4ndrades"
+    },
+    "old_value": {
+      "type": "string",
+      "description": "Det gamla v\u00e4rdet"
+    },
+    "new_value": {
+      "type": "string",
+      "description": "Det nya v\u00e4rdet"
+    },
+    "change_type": {
+      "type": "string",
+      "enum": [
+        "created",
+        "updated"
+      ],
+      "description": "Typ av \u00e4ndring"
+    },
+    "comment": {
+      "type": "string",
+      "description": "Kommentar kopplad till \u00e4ndringen, t.ex. skick vid \u00e5terl\u00e4mning"
+    }
+  },
+  "required": [
+    "tool_id",
+    "changed_by_email",
+    "change_date",
+    "change_type"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "verktygsf\u00f6rvaltare"
+          }
+        },
+        {
+          "created_by": "{{user.email}}"
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "verktygsf\u00f6rvaltare"
+          }
+        }
+      ]
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

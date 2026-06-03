@@ -1,0 +1,142 @@
+{
+  "name": "Transfer",
+  "type": "object",
+  "properties": {
+    "tool_id": {
+      "type": "string"
+    },
+    "tool_name": {
+      "type": "string"
+    },
+    "from_location_id": {
+      "type": "string"
+    },
+    "from_location_name": {
+      "type": "string"
+    },
+    "to_location_id": {
+      "type": "string"
+    },
+    "to_location_name": {
+      "type": "string"
+    },
+    "from_person_email": {
+      "type": "string"
+    },
+    "from_person_name": {
+      "type": "string"
+    },
+    "to_person_email": {
+      "type": "string"
+    },
+    "to_person_name": {
+      "type": "string"
+    },
+    "transfer_date": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "expected_return_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "returned_date": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "active",
+        "returned",
+        "overdue"
+      ],
+      "default": "active"
+    },
+    "notes": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "tool_id",
+    "tool_name"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin_lokalv\u00e5rd"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin_lokalv\u00e5rd"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin_lokalv\u00e5rd"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin_lokalv\u00e5rd"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        }
+      ]
+    }
+  }
+}

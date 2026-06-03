@@ -1,0 +1,151 @@
+{
+  "name": "InventorySession",
+  "type": "object",
+  "properties": {
+    "status": {
+      "type": "string",
+      "enum": [
+        "p\u00e5g\u00e5ende",
+        "pausad",
+        "avslutad"
+      ],
+      "default": "p\u00e5g\u00e5ende"
+    },
+    "mode": {
+      "type": "string",
+      "description": "location | open"
+    },
+    "location_id": {
+      "type": "string",
+      "nullable": true
+    },
+    "location_name": {
+      "type": "string",
+      "nullable": true
+    },
+    "tool_type": {
+      "type": "string",
+      "description": "Kommaseparerade typer, t.ex. 'tools,handtools'"
+    },
+    "checked_item_ids": {
+      "type": "array",
+      "description": "Lista med ID:n f\u00f6r kontrollerade artiklar",
+      "items": {
+        "type": "string"
+      }
+    },
+    "manual_counts": {
+      "type": "object",
+      "description": "Manuellt inmatade antal per artikel-ID {id: antal}",
+      "additionalProperties": true
+    },
+    "started_by_email": {
+      "type": "string"
+    },
+    "started_by_name": {
+      "type": "string"
+    },
+    "started_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "paused_at": {
+      "type": "string",
+      "format": "date-time",
+      "nullable": true
+    }
+  },
+  "required": [
+    "mode",
+    "tool_type",
+    "started_at"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "verktygsf\u00f6rvaltare"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin_lokalv\u00e5rd"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "verktygsf\u00f6rvaltare"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin_lokalv\u00e5rd"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "verktygsf\u00f6rvaltare"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin_lokalv\u00e5rd"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        }
+      ]
+    }
+  }
+}

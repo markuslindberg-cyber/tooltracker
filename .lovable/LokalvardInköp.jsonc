@@ -1,0 +1,161 @@
+{
+  "name": "LokalvardCheckout",
+  "type": "object",
+  "properties": {
+    "request_id": {
+      "type": "string",
+      "description": "Referens till WorkwearRequest"
+    },
+    "customer_id": {
+      "type": "string",
+      "description": "Kundens ID"
+    },
+    "customer_name": {
+      "type": "string",
+      "description": "Kundens namn"
+    },
+    "checked_out_items": {
+      "type": "array",
+      "description": "Lista p\u00e5 artiklar som skannades ut",
+      "items": {
+        "type": "object",
+        "properties": {
+          "item_id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "barcode": {
+            "type": "string"
+          },
+          "quantity": {
+            "type": "number"
+          },
+          "scanned_quantity": {
+            "type": "number"
+          },
+          "replacement_items": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "item_id": {
+                  "type": "string"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "quantity": {
+                  "type": "number"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "checked_out_by_email": {
+      "type": "string",
+      "description": "Email p\u00e5 Admin Lokalv\u00e5rd som utf\u00f6rde uttaget"
+    },
+    "checked_out_by_name": {
+      "type": "string",
+      "description": "Namn p\u00e5 Admin Lokalv\u00e5rd som utf\u00f6rde uttaget"
+    },
+    "checked_out_date": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Datum och tid f\u00f6r uttaget"
+    },
+    "notes": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "request_id",
+    "customer_id",
+    "customer_name",
+    "checked_out_items",
+    "checked_out_date",
+    "checked_out_by_email"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin_lokalv\u00e5rd"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin_lokalv\u00e5rd"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin_lokalv\u00e5rd"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin_lokalv\u00e5rd"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        }
+      ]
+    }
+  }
+}

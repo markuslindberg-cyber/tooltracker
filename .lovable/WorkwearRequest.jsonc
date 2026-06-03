@@ -1,0 +1,164 @@
+{
+  "name": "Uttag",
+  "type": "object",
+  "properties": {
+    "datum": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Datum och tid f\u00f6r uttaget"
+    },
+    "personal_id": {
+      "type": "string",
+      "description": "ID f\u00f6r personalen som gjorde uttaget (referens till TeamMember)"
+    },
+    "personal_namn": {
+      "type": "string",
+      "description": "Namn p\u00e5 personalen som gjorde uttaget"
+    },
+    "kund_id": {
+      "type": "string",
+      "description": "ID f\u00f6r kunden som uttaget gjordes f\u00f6r (referens till Kund)"
+    },
+    "kund_namn": {
+      "type": "string",
+      "description": "Namn p\u00e5 kunden"
+    },
+    "ordernummer": {
+      "type": "string",
+      "description": "Valfritt ordernummer",
+      "nullable": true
+    },
+    "artiklar": {
+      "type": "array",
+      "description": "Lista \u00f6ver artiklar som ingick i uttaget",
+      "items": {
+        "type": "object",
+        "properties": {
+          "artikel_id": {
+            "type": "string",
+            "description": "ID f\u00f6r den uttagna artikeln (referens till LokalvardsArtikel)"
+          },
+          "benamning": {
+            "type": "string",
+            "description": "Ben\u00e4mning p\u00e5 den uttagna artikeln"
+          },
+          "antal": {
+            "type": "number",
+            "description": "Antal av denna artikel som plockades ut"
+          },
+          "pris_per_enhet": {
+            "type": "number",
+            "description": "Pris per enhet vid uttagstillf\u00e4llet"
+          },
+          "total_pris": {
+            "type": "number",
+            "description": "Totalt pris f\u00f6r denna artikel i uttaget (antal * pris_per_enhet)"
+          }
+        },
+        "required": [
+          "artikel_id",
+          "benamning",
+          "antal",
+          "pris_per_enhet"
+        ]
+      }
+    },
+    "total_kostnad": {
+      "type": "number",
+      "description": "Total kostnad f\u00f6r hela uttaget"
+    },
+    "manad": {
+      "type": "string",
+      "description": "M\u00e5naden uttaget gjordes (YYYY-MM)",
+      "pattern": "^\\d{4}-\\d{2}$"
+    }
+  },
+  "required": [
+    "datum",
+    "personal_id",
+    "personal_namn",
+    "kund_id",
+    "kund_namn",
+    "artiklar",
+    "total_kostnad",
+    "manad"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin_lokalv\u00e5rd"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin_lokalv\u00e5rd"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin_lokalv\u00e5rd"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin_lokalv\u00e5rd"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        }
+      ]
+    }
+  }
+}

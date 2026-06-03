@@ -1,0 +1,42 @@
+{
+  "name": "User",
+  "type": "object",
+  "properties": {
+    "role": {
+      "type": "string",
+      "enum": [
+        "\u00e4gare",
+        "admin",
+        "admin_lokalv\u00e5rd",
+        "verktygsf\u00f6rvaltare",
+        "lokalv\u00e5rdare"
+      ],
+      "default": "verktygsf\u00f6rvaltare",
+      "description": "Anv\u00e4ndarens roll i systemet"
+    },
+    "is_active": {
+      "type": "boolean",
+      "default": true,
+      "description": "Om anv\u00e4ndaren \u00e4r aktiv eller inaktiverad"
+    },
+    "bottom_nav_shortcuts": {
+      "type": "array",
+      "description": "Anv\u00e4ndarens valda genv\u00e4gar i bottenmenyn (max 5)",
+      "items": {
+        "type": "object",
+        "properties": {
+          "path": {
+            "type": "string"
+          },
+          "label": {
+            "type": "string"
+          },
+          "icon": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  },
+  "required": []
+}

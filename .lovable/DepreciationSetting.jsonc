@@ -1,0 +1,107 @@
+{
+  "name": "CheckoutReport",
+  "type": "object",
+  "properties": {
+    "project": {
+      "type": "string",
+      "description": "Projektnummer"
+    },
+    "recipient_first_name": {
+      "type": "string",
+      "description": "F\u00f6rnamn p\u00e5 mottagare"
+    },
+    "recipient_last_name": {
+      "type": "string",
+      "description": "Efternamn p\u00e5 mottagare"
+    },
+    "checked_out_items": {
+      "type": "array",
+      "description": "Lista p\u00e5 utplockade f\u00f6rem\u00e5l",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "subcategory": {
+            "type": "string"
+          },
+          "quantity": {
+            "type": "number"
+          }
+        }
+      }
+    },
+    "checked_out_date": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Datum och tid f\u00f6r utplockering"
+    }
+  },
+  "required": [
+    "project",
+    "recipient_first_name",
+    "recipient_last_name",
+    "checked_out_items",
+    "checked_out_date"
+  ],
+  "rls": {
+    "create": {
+      "created_by": "{{user.email}}"
+    },
+    "read": {
+      "$or": [
+        {
+          "created_by": "{{user.email}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "created_by": "{{user.email}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "created_by": "{{user.email}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        }
+      ]
+    }
+  }
+}

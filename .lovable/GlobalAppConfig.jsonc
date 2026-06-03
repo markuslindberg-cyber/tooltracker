@@ -1,0 +1,69 @@
+{
+  "name": "DepreciationSetting",
+  "type": "object",
+  "properties": {
+    "level_name": {
+      "type": "string",
+      "enum": [
+        "L\u00e5g",
+        "Medel",
+        "H\u00f6g"
+      ],
+      "description": "Deprecieringsniv\u00e5ns namn"
+    },
+    "annual_percentage": {
+      "type": "number",
+      "description": "\u00c5rlig deprecieringsprocent (t.ex. 20 f\u00f6r 20%)"
+    },
+    "minimum_value_percentage": {
+      "type": "number",
+      "description": "Minimiv\u00e4rde i procent av ink\u00f6pspriset (t.ex. 20 f\u00f6r 20%)"
+    }
+  },
+  "required": [
+    "level_name",
+    "annual_percentage",
+    "minimum_value_percentage"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "\u00e4gare"
+      }
+    },
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin_lokalv\u00e5rd"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "verktygsf\u00f6rvaltare"
+          }
+        }
+      ]
+    },
+    "update": {
+      "user_condition": {
+        "role": "\u00e4gare"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "\u00e4gare"
+      }
+    }
+  }
+}

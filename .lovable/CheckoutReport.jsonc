@@ -1,0 +1,62 @@
+{
+  "name": "CategoryImage",
+  "type": "object",
+  "properties": {
+    "category": {
+      "type": "string",
+      "description": "Kategorinamn"
+    },
+    "image_url": {
+      "type": "string",
+      "description": "Bild-URL f\u00f6r kategorin"
+    }
+  },
+  "required": [
+    "category"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        }
+      ]
+    },
+    "read": {},
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,162 @@
+{
+  "name": "Location",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Location name"
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "jobsite",
+        "warehouse",
+        "office",
+        "vehicle",
+        "other"
+      ],
+      "description": "Type of location"
+    },
+    "address": {
+      "type": "string"
+    },
+    "responsible_person_id": {
+      "type": "string",
+      "nullable": true,
+      "description": "ID of team member responsible for this location"
+    },
+    "responsible_person_name": {
+      "type": "string",
+      "nullable": true,
+      "description": "Name of team member responsible for this location"
+    },
+    "responsible_person_email": {
+      "type": "string",
+      "nullable": true,
+      "description": "Email of team member responsible for this location"
+    },
+    "team_member_ids": {
+      "type": "array",
+      "description": "IDs of team members working at this location",
+      "items": {
+        "type": "string"
+      }
+    },
+    "team_member_names": {
+      "type": "array",
+      "description": "Names of team members working at this location",
+      "items": {
+        "type": "string"
+      }
+    },
+    "parent_location_id": {
+      "type": "string",
+      "nullable": true,
+      "description": "ID of parent location (for sub-locations like vehicles)"
+    },
+    "parent_location_name": {
+      "type": "string",
+      "nullable": true,
+      "description": "Name of parent location"
+    },
+    "is_active": {
+      "type": "boolean",
+      "default": true
+    },
+    "notes": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "name",
+    "type"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin_lokalv\u00e5rd"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "verktygsf\u00f6rvaltare"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin_lokalv\u00e5rd"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "verktygsf\u00f6rvaltare"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin_lokalv\u00e5rd"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin_lokalv\u00e5rd"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        }
+      ]
+    }
+  }
+}

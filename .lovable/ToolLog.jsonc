@@ -1,0 +1,240 @@
+{
+  "name": "Tool",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Name of the tool"
+    },
+    "manufacturer": {
+      "type": "string",
+      "description": "Manufacturer/brand of the tool"
+    },
+    "model_number": {
+      "type": "string",
+      "description": "Model number"
+    },
+    "serial_number": {
+      "type": "string",
+      "description": "Serial number / Serienummer"
+    },
+    "tool_number": {
+      "type": "string",
+      "description": "Verktygsnummer"
+    },
+    "category": {
+      "type": "string",
+      "description": "Tool category"
+    },
+    "subcategory": {
+      "type": "string",
+      "description": "Tool subcategory"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "available",
+        "in_use",
+        "i_lager",
+        "maintenance",
+        "missing",
+        "retired",
+        "s\u00e5lda"
+      ],
+      "default": "available",
+      "description": "Current status of the tool"
+    },
+    "condition": {
+      "type": "string",
+      "enum": [
+        "new",
+        "good",
+        "fair",
+        "poor"
+      ],
+      "default": "good"
+    },
+    "purchase_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "purchase_price": {
+      "type": "number"
+    },
+    "depreciation_level": {
+      "type": "string",
+      "enum": [
+        "L\u00e5g",
+        "Medel",
+        "H\u00f6g"
+      ],
+      "description": "Deprecieringsniv\u00e5 f\u00f6r maskinen"
+    },
+    "service_cost": {
+      "type": "number",
+      "description": "Servicekostnad per \u00e5r eller period"
+    },
+    "purchase_location": {
+      "type": "string"
+    },
+    "invoice_number": {
+      "type": "string"
+    },
+    "image_url": {
+      "type": "string"
+    },
+    "suggested_image_url": {
+      "type": "string"
+    },
+    "location_id": {
+      "type": "string"
+    },
+    "location_name": {
+      "type": "string"
+    },
+    "assigned_to_email": {
+      "type": "string"
+    },
+    "assigned_to_name": {
+      "type": "string"
+    },
+    "main_machine_id": {
+      "type": "string",
+      "nullable": true
+    },
+    "main_machine_name": {
+      "type": "string",
+      "nullable": true
+    },
+    "compatible_with_main_machine_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "compatible_with_main_machine_names": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "notes": {
+      "type": "string"
+    },
+    "last_seen_date": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "barcode": {
+      "type": "string"
+    },
+    "is_deleted": {
+      "type": "boolean",
+      "default": false,
+      "description": "Mjukradering \u2013 visas i papperskorg"
+    },
+    "deleted_at": {
+      "type": "string",
+      "format": "date-time",
+      "nullable": true,
+      "description": "Tidpunkt f\u00f6r mjukradering"
+    }
+  },
+  "required": [
+    "name",
+    "category"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "verktygsf\u00f6rvaltare"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin_lokalv\u00e5rd"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "verktygsf\u00f6rvaltare"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin_lokalv\u00e5rd"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "verktygsf\u00f6rvaltare"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin_lokalv\u00e5rd"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin_lokalv\u00e5rd"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        }
+      ]
+    }
+  }
+}
