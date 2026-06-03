@@ -1,0 +1,166 @@
+{
+  "name": "LokalvardCheckout",
+  "type": "object",
+  "properties": {
+    "request_id": {
+      "type": "string",
+      "description": "Referens till LokalvardArtikelRequest"
+    },
+    "customer_id": {
+      "type": "string",
+      "description": "Kundens ID"
+    },
+    "customer_name": {
+      "type": "string",
+      "description": "Kundens namn"
+    },
+    "ordernummer": {
+      "type": "string",
+      "nullable": true,
+      "description": "Ordernummer från begäran"
+    },
+    "checked_out_items": {
+      "type": "array",
+      "description": "Lista på artiklar som skannades ut",
+      "items": {
+        "type": "object",
+        "properties": {
+          "item_id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "barcode": {
+            "type": "string"
+          },
+          "quantity": {
+            "type": "number"
+          },
+          "scanned_quantity": {
+            "type": "number"
+          },
+          "replacement_items": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "item_id": {
+                  "type": "string"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "quantity": {
+                  "type": "number"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "checked_out_by_email": {
+      "type": "string",
+      "description": "Email på Admin Lokalvård som utförde uttaget"
+    },
+    "checked_out_by_name": {
+      "type": "string",
+      "description": "Namn på Admin Lokalvård som utförde uttaget"
+    },
+    "checked_out_date": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Datum och tid för uttaget"
+    },
+    "notes": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "request_id",
+    "customer_id",
+    "customer_name",
+    "checked_out_items",
+    "checked_out_date",
+    "checked_out_by_email"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin_lokalvård"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "ägare"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin_lokalvård"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "ägare"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin_lokalvård"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "ägare"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin_lokalvård"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "ägare"
+          }
+        }
+      ]
+    }
+  }
+}

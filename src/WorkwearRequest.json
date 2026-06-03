@@ -1,0 +1,45 @@
+{
+  "name": "SpreadsheetCell",
+  "type": "object",
+  "properties": {
+    "workbookId": {
+      "type": "string",
+      "description": "Referens till arbetsboken"
+    },
+    "sheetName": {
+      "type": "string",
+      "description": "Namn på kalkylbladet"
+    },
+    "row": {
+      "type": "number",
+      "description": "Radnummer (0-indexerat)"
+    },
+    "column": {
+      "type": "number",
+      "description": "Kolumnnummer (0-indexerat)"
+    },
+    "value": {
+      "type": "string",
+      "description": "Cellens råvärde"
+    },
+    "formula": {
+      "type": "string",
+      "description": "Formel om cellen innehåller en (t.ex. =SUM(A1:A10))"
+    },
+    "displayValue": {
+      "type": "string",
+      "description": "Det beräknade/formaterade värdet att visa"
+    },
+    "format": {
+      "type": "string",
+      "enum": ["general", "currency", "date", "time", "percentage", "number"],
+      "default": "general",
+      "description": "Visningsformat"
+    },
+    "comment": {
+      "type": "string",
+      "description": "Kommentar på cellen"
+    }
+  },
+  "required": ["workbookId", "sheetName", "row", "column"]
+}
