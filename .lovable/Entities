@@ -1,0 +1,3804 @@
+{
+  "name": "Arbetskl\u00e4derUtrustning",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Namn p\u00e5 arbetskl\u00e4der/utrustning"
+    },
+    "manufacturer": {
+      "type": "string",
+      "description": "Tillverkare/m\u00e4rke"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "Arbetskl\u00e4der varsel",
+        "Arbetskl\u00e4der",
+        "Skor",
+        "Skyddsutrustning"
+      ],
+      "description": "Huvudkategori"
+    },
+    "subcategory": {
+      "type": "string",
+      "description": "Typ av plagg/utrustning"
+    },
+    "size": {
+      "type": "string",
+      "enum": [
+        "XXL",
+        "XL",
+        "L",
+        "M",
+        "S",
+        "XS",
+        "XXS"
+      ],
+      "description": "Storlek"
+    },
+    "quantity": {
+      "type": "number",
+      "description": "Antal"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "i_lager",
+        "i_bruk",
+        "saknas",
+        "kasserad"
+      ],
+      "default": "i_lager",
+      "description": "Nuvarande status"
+    },
+    "condition": {
+      "type": "string",
+      "enum": [
+        "ny",
+        "bra",
+        "okej",
+        "d\u00e5lig"
+      ],
+      "default": "bra",
+      "description": "Skick"
+    },
+    "location_id": {
+      "type": "string"
+    },
+    "location_name": {
+      "type": "string"
+    },
+    "purchase_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "purchase_price": {
+      "type": "number"
+    },
+    "barcode": {
+      "type": "string"
+    },
+    "image_url": {
+      "type": "string"
+    },
+    "notes": {
+      "type": "string"
+    },
+    "is_deleted": {
+      "type": "boolean",
+      "default": false,
+      "description": "Mjukradering \u2013 visas i papperskorg"
+    },
+    "deleted_at": {
+      "type": "string",
+      "format": "date-time",
+      "nullable": true,
+      "description": "Tidpunkt f\u00f6r mjukradering"
+    }
+  },
+  "required": [
+    "name",
+    "category"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin_lokalv\u00e5rd"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin_lokalv\u00e5rd"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin_lokalv\u00e5rd"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin_lokalv\u00e5rd"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        }
+      ]
+    }
+  }
+}
+{
+  "name": "Category",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Kategorinamn"
+    },
+    "entity_type": {
+      "type": "string",
+      "description": "Vilken entitet kategorin tillh\u00f6r, t.ex. Tool, HandTool, Arbetskl\u00e4derUtrustning, LokalvardsArtikel",
+      "enum": [
+        "Tool",
+        "HandTool",
+        "Arbetskl\u00e4derUtrustning",
+        "LokalvardsArtikel"
+      ]
+    },
+    "subcategories": {
+      "type": "array",
+      "description": "Lista \u00f6ver underkategorier som anv\u00e4nds under denna kategori",
+      "items": {
+        "type": "string"
+      }
+    },
+    "page_label": {
+      "type": "string",
+      "description": "Sidnamn i appen d\u00e4r denna kategori visas"
+    }
+  },
+  "required": [
+    "name",
+    "entity_type"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "verktygsf\u00f6rvaltare"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin_lokalv\u00e5rd"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        }
+      ]
+    }
+  }
+}
+{
+  "name": "CategoryImage",
+  "type": "object",
+  "properties": {
+    "category": {
+      "type": "string",
+      "description": "Kategorinamn"
+    },
+    "image_url": {
+      "type": "string",
+      "description": "Bild-URL f\u00f6r kategorin"
+    }
+  },
+  "required": [
+    "category"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        }
+      ]
+    },
+    "read": {},
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        }
+      ]
+    }
+  }
+}
+{
+  "name": "CheckoutReport",
+  "type": "object",
+  "properties": {
+    "project": {
+      "type": "string",
+      "description": "Projektnummer"
+    },
+    "recipient_first_name": {
+      "type": "string",
+      "description": "F\u00f6rnamn p\u00e5 mottagare"
+    },
+    "recipient_last_name": {
+      "type": "string",
+      "description": "Efternamn p\u00e5 mottagare"
+    },
+    "checked_out_items": {
+      "type": "array",
+      "description": "Lista p\u00e5 utplockade f\u00f6rem\u00e5l",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "subcategory": {
+            "type": "string"
+          },
+          "quantity": {
+            "type": "number"
+          }
+        }
+      }
+    },
+    "checked_out_date": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Datum och tid f\u00f6r utplockering"
+    }
+  },
+  "required": [
+    "project",
+    "recipient_first_name",
+    "recipient_last_name",
+    "checked_out_items",
+    "checked_out_date"
+  ],
+  "rls": {
+    "create": {
+      "created_by": "{{user.email}}"
+    },
+    "read": {
+      "$or": [
+        {
+          "created_by": "{{user.email}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "created_by": "{{user.email}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "created_by": "{{user.email}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        }
+      ]
+    }
+  }
+}
+{
+  "name": "DepreciationSetting",
+  "type": "object",
+  "properties": {
+    "level_name": {
+      "type": "string",
+      "enum": [
+        "L\u00e5g",
+        "Medel",
+        "H\u00f6g"
+      ],
+      "description": "Deprecieringsniv\u00e5ns namn"
+    },
+    "annual_percentage": {
+      "type": "number",
+      "description": "\u00c5rlig deprecieringsprocent (t.ex. 20 f\u00f6r 20%)"
+    },
+    "minimum_value_percentage": {
+      "type": "number",
+      "description": "Minimiv\u00e4rde i procent av ink\u00f6pspriset (t.ex. 20 f\u00f6r 20%)"
+    }
+  },
+  "required": [
+    "level_name",
+    "annual_percentage",
+    "minimum_value_percentage"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "\u00e4gare"
+      }
+    },
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin_lokalv\u00e5rd"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "verktygsf\u00f6rvaltare"
+          }
+        }
+      ]
+    },
+    "update": {
+      "user_condition": {
+        "role": "\u00e4gare"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "\u00e4gare"
+      }
+    }
+  }
+}
+{
+  "name": "GlobalAppConfig",
+  "type": "object",
+  "properties": {
+    "config_key": {
+      "type": "string",
+      "description": "Unik nyckel f\u00f6r konfigurationen, t.ex. 'dashboard_layout' eller 'navigation_order'"
+    },
+    "config_value": {
+      "type": "object",
+      "description": "Konfigurationsv\u00e4rdet som JSON-objekt",
+      "additionalProperties": true
+    }
+  },
+  "required": [
+    "config_key",
+    "config_value"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "\u00e4gare"
+      }
+    },
+    "read": {
+      "user_condition": {
+        "$exists": true
+      }
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "user_condition": {
+        "role": "\u00e4gare"
+      }
+    }
+  }
+}
+{
+  "name": "HandTool",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Namn p\u00e5 redskapet"
+    },
+    "manufacturer": {
+      "type": "string",
+      "description": "Tillverkare/m\u00e4rke"
+    },
+    "category": {
+      "type": "string",
+      "description": "Kategori, t.ex. R\u00e4fsor, Spadar, Krattor"
+    },
+    "subcategory": {
+      "type": "string",
+      "description": "Underkategori"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "i_lager",
+        "i_bruk",
+        "saknas",
+        "kasserad"
+      ],
+      "default": "i_lager",
+      "description": "Nuvarande status"
+    },
+    "location_id": {
+      "type": "string"
+    },
+    "location_name": {
+      "type": "string"
+    },
+    "assigned_to_email": {
+      "type": "string"
+    },
+    "assigned_to_name": {
+      "type": "string"
+    },
+    "purchase_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "purchase_price": {
+      "type": "number"
+    },
+    "barcode": {
+      "type": "string"
+    },
+    "image_url": {
+      "type": "string"
+    },
+    "notes": {
+      "type": "string"
+    },
+    "is_deleted": {
+      "type": "boolean",
+      "default": false,
+      "description": "Mjukradering \u2013 visas i papperskorg"
+    },
+    "deleted_at": {
+      "type": "string",
+      "format": "date-time",
+      "nullable": true,
+      "description": "Tidpunkt f\u00f6r mjukradering"
+    }
+  },
+  "required": [
+    "name",
+    "category"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "verktygsf\u00f6rvaltare"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin_lokalv\u00e5rd"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "verktygsf\u00f6rvaltare"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin_lokalv\u00e5rd"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "verktygsf\u00f6rvaltare"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin_lokalv\u00e5rd"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin_lokalv\u00e5rd"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        }
+      ]
+    }
+  }
+}
+{
+  "name": "Huvudmaskin",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Projektnamn/nummer"
+    },
+    "typ": {
+      "type": "string",
+      "enum": [
+        "Traktor",
+        "Redskapsb\u00e4rare",
+        "Hjullastare",
+        "Gr\u00e4vmaskin",
+        "Lastbil",
+        "Minidumper",
+        "\u00d6vrigt"
+      ],
+      "description": "Maskintyp"
+    },
+    "manufacturer": {
+      "type": "string",
+      "description": "Tillverkare"
+    },
+    "model": {
+      "type": "string",
+      "description": "Modell"
+    },
+    "year_model": {
+      "type": "number",
+      "description": "\u00c5rsmodell"
+    },
+    "registration_number": {
+      "type": "string",
+      "description": "Regnummer"
+    },
+    "project_number": {
+      "type": "string",
+      "description": "Projektnummer"
+    },
+    "location_id": {
+      "type": "string",
+      "description": "Referens till Location-entiteten"
+    },
+    "location_name": {
+      "type": "string"
+    },
+    "notes": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "name"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin_lokalv\u00e5rd"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin_lokalv\u00e5rd"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin_lokalv\u00e5rd"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin_lokalv\u00e5rd"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        }
+      ]
+    }
+  }
+}
+{
+  "name": "Inventering",
+  "type": "object",
+  "properties": {
+    "datum": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Datum och tid f\u00f6r inventeringen"
+    },
+    "personal_id": {
+      "type": "string",
+      "description": "ID f\u00f6r personalen som gjorde inventeringen (referens till TeamMember)"
+    },
+    "personal_namn": {
+      "type": "string",
+      "description": "Namn p\u00e5 personalen som gjorde inventeringen"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "p\u00e5g\u00e5ende",
+        "avslutad",
+        "pausad"
+      ],
+      "default": "p\u00e5g\u00e5ende",
+      "description": "Status f\u00f6r inventeringen"
+    },
+    "scanningar": {
+      "type": "array",
+      "description": "Lista \u00f6ver alla skanningar som gjordes under inventeringen",
+      "items": {
+        "type": "object",
+        "properties": {
+          "scanning_id": {
+            "type": "string",
+            "description": "ID f\u00f6r scanningstillf\u00e4llet"
+          },
+          "artikel_id": {
+            "type": "string",
+            "description": "ID f\u00f6r den skannade artikeln"
+          },
+          "artikel_namn": {
+            "type": "string",
+            "description": "Namn p\u00e5 den skannade artikeln"
+          },
+          "streckkod": {
+            "type": "string",
+            "description": "Streckkoden som skannades"
+          },
+          "scannad_antal": {
+            "type": "number",
+            "description": "Antal som registrerades vid skanningen"
+          },
+          "scan_tid": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Tiden d\u00e5 skanningen genomf\u00f6rdes"
+          }
+        },
+        "required": [
+          "scanning_id",
+          "artikel_id",
+          "artikel_namn",
+          "streckkod",
+          "scannad_antal",
+          "scan_tid"
+        ]
+      }
+    },
+    "anteckningar": {
+      "type": "string",
+      "description": "Eventuella anteckningar eller observationer fr\u00e5n inventeringen",
+      "nullable": true
+    }
+  },
+  "required": [
+    "datum",
+    "personal_id",
+    "personal_namn",
+    "status",
+    "scanningar"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "user_condition": {
+        "role": "\u00e4gare"
+      }
+    }
+  }
+}
+{
+  "name": "InventeringSkanning",
+  "type": "object",
+  "properties": {
+    "inventering_id": {
+      "type": "string",
+      "description": "Referens till Inventering-entiteten"
+    },
+    "artikel_id": {
+      "type": "string",
+      "description": "ID f\u00f6r den skannade artikeln (referens till LokalvardsArtikel)"
+    },
+    "artikel_namn": {
+      "type": "string",
+      "description": "Namn p\u00e5 den skannade artikeln"
+    },
+    "streckkod": {
+      "type": "string",
+      "description": "Streckkoden som skannades"
+    },
+    "scannad_antal": {
+      "type": "number",
+      "description": "Antal som registrerades vid skanningen"
+    },
+    "registrerad_tid": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Tiden d\u00e5 skanningen gjordes"
+    },
+    "scannad_av_email": {
+      "type": "string",
+      "description": "Email p\u00e5 personalen som scannadeartikeln"
+    },
+    "scannad_av_namn": {
+      "type": "string",
+      "description": "Namn p\u00e5 personalen som skannade artikeln"
+    },
+    "anteckningar": {
+      "type": "string",
+      "description": "Eventuella anteckningar f\u00f6r denna scan",
+      "nullable": true
+    }
+  },
+  "required": [
+    "inventering_id",
+    "artikel_id",
+    "artikel_namn",
+    "streckkod",
+    "scannad_antal",
+    "registrerad_tid",
+    "scannad_av_email",
+    "scannad_av_namn"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "verktygsf\u00f6rvaltare"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "verktygsf\u00f6rvaltare"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        }
+      ]
+    }
+  }
+}
+{
+  "name": "InventoryReport",
+  "type": "object",
+  "properties": {
+    "location_name": {
+      "type": "string"
+    },
+    "location_id": {
+      "type": "string"
+    },
+    "tool_type": {
+      "type": "string",
+      "description": "tools | handtools | both"
+    },
+    "mode": {
+      "type": "string",
+      "description": "location | open"
+    },
+    "performed_by_name": {
+      "type": "string"
+    },
+    "performed_by_email": {
+      "type": "string"
+    },
+    "performed_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "total_items": {
+      "type": "number"
+    },
+    "checked_items": {
+      "type": "number"
+    },
+    "unchecked_items": {
+      "type": "number"
+    },
+    "checked_list": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          },
+          "category": {
+            "type": "string"
+          },
+          "barcode": {
+            "type": "string"
+          },
+          "location_name": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "condition": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "unchecked_list": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          },
+          "category": {
+            "type": "string"
+          },
+          "barcode": {
+            "type": "string"
+          },
+          "location_name": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  },
+  "required": [
+    "performed_at",
+    "total_items",
+    "checked_items"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "verktygsf\u00f6rvaltare"
+          }
+        }
+      ]
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}
+{
+  "name": "InventorySession",
+  "type": "object",
+  "properties": {
+    "status": {
+      "type": "string",
+      "enum": [
+        "p\u00e5g\u00e5ende",
+        "pausad",
+        "avslutad"
+      ],
+      "default": "p\u00e5g\u00e5ende"
+    },
+    "mode": {
+      "type": "string",
+      "description": "location | open"
+    },
+    "location_id": {
+      "type": "string",
+      "nullable": true
+    },
+    "location_name": {
+      "type": "string",
+      "nullable": true
+    },
+    "tool_type": {
+      "type": "string",
+      "description": "Kommaseparerade typer, t.ex. 'tools,handtools'"
+    },
+    "checked_item_ids": {
+      "type": "array",
+      "description": "Lista med ID:n f\u00f6r kontrollerade artiklar",
+      "items": {
+        "type": "string"
+      }
+    },
+    "manual_counts": {
+      "type": "object",
+      "description": "Manuellt inmatade antal per artikel-ID {id: antal}",
+      "additionalProperties": true
+    },
+    "started_by_email": {
+      "type": "string"
+    },
+    "started_by_name": {
+      "type": "string"
+    },
+    "started_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "paused_at": {
+      "type": "string",
+      "format": "date-time",
+      "nullable": true
+    }
+  },
+  "required": [
+    "mode",
+    "tool_type",
+    "started_at"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "verktygsf\u00f6rvaltare"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin_lokalv\u00e5rd"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "verktygsf\u00f6rvaltare"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin_lokalv\u00e5rd"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "verktygsf\u00f6rvaltare"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin_lokalv\u00e5rd"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        }
+      ]
+    }
+  }
+}
+{
+  "name": "Kund",
+  "type": "object",
+  "properties": {
+    "namn": {
+      "type": "string",
+      "description": "Kundnamn"
+    },
+    "typ": {
+      "type": "string",
+      "enum": [
+        "Cemi",
+        "PHM",
+        "\u00d6vrig",
+        "BRF",
+        "Kommersiella",
+        "Koncernbolag",
+        "Internt"
+      ],
+      "description": "Kundtyp"
+    },
+    "projektnummer": {
+      "type": "string",
+      "description": "Projektnummer eller projektnamn"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "aktiv",
+        "inaktiv"
+      ],
+      "default": "aktiv",
+      "description": "Kund aktiv eller inaktiv"
+    }
+  },
+  "required": [
+    "namn",
+    "typ"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin_lokalv\u00e5rd"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "lokalv\u00e5rdare"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin_lokalv\u00e5rd"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin_lokalv\u00e5rd"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin_lokalv\u00e5rd"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        }
+      ]
+    }
+  }
+}
+{
+  "name": "LoanRequest",
+  "type": "object",
+  "properties": {
+    "tool_ids": {
+      "type": "array",
+      "description": "IDs of tools being requested for loan",
+      "items": {
+        "type": "string"
+      }
+    },
+    "tool_names": {
+      "type": "array",
+      "description": "Names of tools being requested",
+      "items": {
+        "type": "string"
+      }
+    },
+    "tool_details": {
+      "type": "array",
+      "description": "Detailed information about each tool including individual return dates",
+      "items": {
+        "type": "object",
+        "properties": {
+          "tool_id": {
+            "type": "string"
+          },
+          "tool_name": {
+            "type": "string"
+          },
+          "location_id": {
+            "type": "string"
+          },
+          "location_name": {
+            "type": "string"
+          },
+          "return_date": {
+            "type": "string",
+            "format": "date"
+          }
+        },
+        "required": [
+          "tool_id",
+          "tool_name"
+        ]
+      }
+    },
+    "requested_by_email": {
+      "type": "string",
+      "description": "Email of person requesting the loan"
+    },
+    "requested_by_name": {
+      "type": "string",
+      "description": "Name of person requesting the loan"
+    },
+    "assigned_to_email": {
+      "type": "string",
+      "description": "Email of person who will use the tools"
+    },
+    "assigned_to_name": {
+      "type": "string",
+      "description": "Name of person who will use the tools"
+    },
+    "destination_location_id": {
+      "type": "string",
+      "description": "Where the tools will be loaned to"
+    },
+    "destination_location_name": {
+      "type": "string"
+    },
+    "default_return_date": {
+      "type": "string",
+      "format": "date",
+      "description": "Default return date for all tools (can be overridden per tool)"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "approved",
+        "rejected",
+        "pending_return",
+        "returned"
+      ],
+      "default": "pending",
+      "description": "Request status"
+    },
+    "approver_email": {
+      "type": "string",
+      "description": "Email of person responsible for the location (approver)"
+    },
+    "approver_name": {
+      "type": "string"
+    },
+    "approval_date": {
+      "type": "string",
+      "format": "date-time",
+      "nullable": true
+    },
+    "approver_comment": {
+      "type": "string",
+      "description": "Comment from approver"
+    },
+    "requester_comment": {
+      "type": "string",
+      "description": "Comment from person requesting loan"
+    },
+    "destination_location_manager_email": {
+      "type": "string",
+      "description": "Email of person responsible for destination location"
+    },
+    "destination_location_manager_name": {
+      "type": "string"
+    },
+    "is_extension_request": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether this is an extension request"
+    },
+    "original_request_id": {
+      "type": "string",
+      "nullable": true,
+      "description": "ID of original request if this is an extension"
+    },
+    "returned_date": {
+      "type": "string",
+      "format": "date-time",
+      "nullable": true
+    },
+    "return_confirmed_by_name": {
+      "type": "string",
+      "nullable": true,
+      "description": "Name of person who confirmed receipt of returned tools"
+    },
+    "return_confirmed_date": {
+      "type": "string",
+      "format": "date-time",
+      "nullable": true
+    }
+  },
+  "required": [
+    "tool_ids",
+    "requested_by_email",
+    "assigned_to_email",
+    "destination_location_id",
+    "default_return_date",
+    "approver_email"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "verktygsf\u00f6rvaltare"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin_lokalv\u00e5rd"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        },
+        {
+          "created_by": "{{user.email}}"
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "verktygsf\u00f6rvaltare"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin_lokalv\u00e5rd"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        },
+        {
+          "requested_by_email": "{{user.email}}"
+        },
+        {
+          "assigned_to_email": "{{user.email}}"
+        },
+        {
+          "approver_email": "{{user.email}}"
+        },
+        {
+          "destination_location_manager_email": "{{user.email}}"
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "verktygsf\u00f6rvaltare"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin_lokalv\u00e5rd"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        },
+        {
+          "requested_by_email": "{{user.email}}",
+          "data.status": "pending"
+        },
+        {
+          "approver_email": "{{user.email}}"
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        },
+        {
+          "created_by": "{{user.email}}",
+          "data.status": "pending"
+        }
+      ]
+    }
+  }
+}
+{
+  "name": "Location",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Location name"
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "jobsite",
+        "warehouse",
+        "office",
+        "vehicle",
+        "other"
+      ],
+      "description": "Type of location"
+    },
+    "address": {
+      "type": "string"
+    },
+    "responsible_person_id": {
+      "type": "string",
+      "nullable": true,
+      "description": "ID of team member responsible for this location"
+    },
+    "responsible_person_name": {
+      "type": "string",
+      "nullable": true,
+      "description": "Name of team member responsible for this location"
+    },
+    "responsible_person_email": {
+      "type": "string",
+      "nullable": true,
+      "description": "Email of team member responsible for this location"
+    },
+    "team_member_ids": {
+      "type": "array",
+      "description": "IDs of team members working at this location",
+      "items": {
+        "type": "string"
+      }
+    },
+    "team_member_names": {
+      "type": "array",
+      "description": "Names of team members working at this location",
+      "items": {
+        "type": "string"
+      }
+    },
+    "parent_location_id": {
+      "type": "string",
+      "nullable": true,
+      "description": "ID of parent location (for sub-locations like vehicles)"
+    },
+    "parent_location_name": {
+      "type": "string",
+      "nullable": true,
+      "description": "Name of parent location"
+    },
+    "is_active": {
+      "type": "boolean",
+      "default": true
+    },
+    "notes": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "name",
+    "type"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin_lokalv\u00e5rd"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "verktygsf\u00f6rvaltare"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin_lokalv\u00e5rd"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "verktygsf\u00f6rvaltare"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin_lokalv\u00e5rd"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin_lokalv\u00e5rd"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        }
+      ]
+    }
+  }
+}
+{
+  "name": "LokalvardArtikelRequest",
+  "type": "object",
+  "properties": {
+    "request_number": {
+      "type": "integer",
+      "description": "L\u00f6pnummer f\u00f6r beg\u00e4ran"
+    },
+    "customer_id": {
+      "type": "string",
+      "nullable": true,
+      "description": "Referens till Kund"
+    },
+    "customer_name": {
+      "type": "string",
+      "nullable": true,
+      "description": "Kundens namn"
+    },
+    "ordernummer": {
+      "type": "string",
+      "nullable": true,
+      "description": "Frivilligt ordernummer"
+    },
+    "requested_items": {
+      "type": "array",
+      "description": "Lista p\u00e5 beg\u00e4rda artiklar",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "quantity": {
+            "type": "number"
+          }
+        }
+      }
+    },
+    "request_date": {
+      "type": "string",
+      "format": "date-time",
+      "description": "N\u00e4r beg\u00e4ran gjordes"
+    },
+    "requested_by_email": {
+      "type": "string",
+      "description": "Email p\u00e5 den som gjorde beg\u00e4ran"
+    },
+    "requested_by_name": {
+      "type": "string",
+      "description": "Namn p\u00e5 den som gjorde beg\u00e4ran"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "approved",
+        "rejected",
+        "completed"
+      ],
+      "default": "pending",
+      "description": "Status p\u00e5 beg\u00e4ran"
+    },
+    "approved_by_email": {
+      "type": "string",
+      "description": "Email p\u00e5 Admin Lokalv\u00e5rd som godk\u00e4nde"
+    },
+    "approved_by_name": {
+      "type": "string",
+      "description": "Namn p\u00e5 Admin Lokalv\u00e5rd som godk\u00e4nde"
+    },
+    "approved_date": {
+      "type": "string",
+      "format": "date-time",
+      "description": "N\u00e4r beg\u00e4ran godk\u00e4ndes"
+    },
+    "notes": {
+      "type": "string",
+      "description": "Anteckningar p\u00e5 beg\u00e4ran"
+    }
+  },
+  "required": [
+    "requested_items",
+    "request_date",
+    "requested_by_email"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "lokalv\u00e5rdare"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin_lokalv\u00e5rd"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "lokalv\u00e5rdare"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin_lokalv\u00e5rd"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin_lokalv\u00e5rd"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin_lokalv\u00e5rd"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        }
+      ]
+    }
+  }
+}
+{
+  "name": "LokalvardCheckout",
+  "type": "object",
+  "properties": {
+    "request_id": {
+      "type": "string",
+      "description": "Referens till WorkwearRequest"
+    },
+    "customer_id": {
+      "type": "string",
+      "description": "Kundens ID"
+    },
+    "customer_name": {
+      "type": "string",
+      "description": "Kundens namn"
+    },
+    "checked_out_items": {
+      "type": "array",
+      "description": "Lista p\u00e5 artiklar som skannades ut",
+      "items": {
+        "type": "object",
+        "properties": {
+          "item_id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "barcode": {
+            "type": "string"
+          },
+          "quantity": {
+            "type": "number"
+          },
+          "scanned_quantity": {
+            "type": "number"
+          },
+          "replacement_items": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "item_id": {
+                  "type": "string"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "quantity": {
+                  "type": "number"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "checked_out_by_email": {
+      "type": "string",
+      "description": "Email p\u00e5 Admin Lokalv\u00e5rd som utf\u00f6rde uttaget"
+    },
+    "checked_out_by_name": {
+      "type": "string",
+      "description": "Namn p\u00e5 Admin Lokalv\u00e5rd som utf\u00f6rde uttaget"
+    },
+    "checked_out_date": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Datum och tid f\u00f6r uttaget"
+    },
+    "notes": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "request_id",
+    "customer_id",
+    "customer_name",
+    "checked_out_items",
+    "checked_out_date",
+    "checked_out_by_email"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin_lokalv\u00e5rd"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin_lokalv\u00e5rd"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin_lokalv\u00e5rd"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin_lokalv\u00e5rd"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        }
+      ]
+    }
+  }
+}
+{
+  "name": "LokalvardInk\u00f6p",
+  "type": "object",
+  "properties": {
+    "artikel_id": {
+      "type": "string",
+      "description": "Referens till LokalvardsArtikel"
+    },
+    "datum": {
+      "type": "string",
+      "format": "date",
+      "description": "Ink\u00f6psdatum"
+    },
+    "antal": {
+      "type": "number",
+      "description": "Antal ink\u00f6pta enheter"
+    },
+    "pris": {
+      "type": "number",
+      "description": "Pris per enhet"
+    }
+  },
+  "required": [
+    "artikel_id",
+    "datum",
+    "antal",
+    "pris"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin_lokalv\u00e5rd"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin_lokalv\u00e5rd"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin_lokalv\u00e5rd"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin_lokalv\u00e5rd"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        }
+      ]
+    }
+  }
+}
+{
+  "name": "LokalvardsArtikel",
+  "type": "object",
+  "properties": {
+    "benamning": {
+      "type": "string",
+      "description": "Artikelns ben\u00e4mning"
+    },
+    "artikelnummer": {
+      "type": "string",
+      "description": "Unikt artikelnummer"
+    },
+    "streckkod": {
+      "type": "string",
+      "description": "Unik streckkod"
+    },
+    "old_streckkod": {
+      "type": "string",
+      "nullable": true,
+      "description": "Tidigare streckkod"
+    },
+    "pris": {
+      "type": "number",
+      "description": "Pris per enhet"
+    },
+    "inkopsdatum": {
+      "type": "string",
+      "format": "date",
+      "description": "Datum d\u00e5 artikeln k\u00f6ptes in"
+    },
+    "antal_inkopta": {
+      "type": "integer",
+      "description": "Totalt antal ink\u00f6pta enheter"
+    },
+    "lagertroskelvarde": {
+      "type": "integer",
+      "description": "L\u00e4gsta antal i lager innan best\u00e4llning kr\u00e4vs",
+      "default": 10
+    },
+    "utgaende": {
+      "type": "boolean",
+      "default": false,
+      "description": "Indikerar om artikeln \u00e4r utg\u00e5ende"
+    },
+    "current_quantity": {
+      "type": "number",
+      "description": "Aktuellt antal i lager",
+      "default": 0
+    },
+    "subcategory": {
+      "type": "string",
+      "nullable": true,
+      "description": "Underkategori f\u00f6r artikeln"
+    },
+    "is_deleted": {
+      "type": "boolean",
+      "default": false,
+      "description": "Mjukradering \u2013 visas i papperskorg"
+    },
+    "deleted_at": {
+      "type": "string",
+      "format": "date-time",
+      "nullable": true,
+      "description": "Tidpunkt f\u00f6r mjukradering"
+    }
+  },
+  "required": [
+    "benamning",
+    "streckkod",
+    "pris",
+    "inkopsdatum",
+    "antal_inkopta",
+    "lagertroskelvarde"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin_lokalv\u00e5rd"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "lokalv\u00e5rdare"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin_lokalv\u00e5rd"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin_lokalv\u00e5rd"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin_lokalv\u00e5rd"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        }
+      ]
+    }
+  }
+}
+{
+  "name": "RolePermission",
+  "type": "object",
+  "properties": {
+    "role_name": {
+      "type": "string",
+      "description": "Namnet p\u00e5 rollen"
+    },
+    "entity_name": {
+      "type": "string",
+      "description": "Namnet p\u00e5 entiteten"
+    },
+    "can_create": {
+      "type": "boolean",
+      "default": false
+    },
+    "can_read": {
+      "type": "boolean",
+      "default": false
+    },
+    "can_update": {
+      "type": "boolean",
+      "default": false
+    },
+    "can_delete": {
+      "type": "boolean",
+      "default": false
+    }
+  },
+  "required": [
+    "role_name",
+    "entity_name"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "\u00e4gare"
+      }
+    },
+    "read": {
+      "user_condition": {
+        "role": "\u00e4gare"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "\u00e4gare"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "\u00e4gare"
+      }
+    }
+  }
+}
+{
+  "name": "ServiceRecord",
+  "type": "object",
+  "properties": {
+    "tool_id": {
+      "type": "string",
+      "description": "Reference to Tool entity"
+    },
+    "tool_name": {
+      "type": "string"
+    },
+    "service_type": {
+      "type": "string",
+      "enum": [
+        "repair",
+        "maintenance",
+        "inspection",
+        "calibration",
+        "replacement_parts",
+        "annual_service"
+      ],
+      "description": "Type of service"
+    },
+    "cost": {
+      "type": "number",
+      "description": "Service cost"
+    },
+    "service_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "description": {
+      "type": "string",
+      "description": "Details of service performed"
+    },
+    "performed_by": {
+      "type": "string",
+      "description": "Person or company who performed service"
+    },
+    "invoice_number": {
+      "type": "string",
+      "description": "Invoice/receipt number (optional)"
+    },
+    "supplier": {
+      "type": "string",
+      "description": "Supplier/vendor name (optional)"
+    },
+    "notes": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "tool_id",
+    "tool_name",
+    "service_type",
+    "cost",
+    "service_date"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "verktygsf\u00f6rvaltare"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin_lokalv\u00e5rd"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "verktygsf\u00f6rvaltare"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin_lokalv\u00e5rd"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "verktygsf\u00f6rvaltare"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin_lokalv\u00e5rd"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin_lokalv\u00e5rd"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        }
+      ]
+    }
+  }
+}
+{
+  "name": "ServiceTemplate",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Namn p\u00e5 servicemallen"
+    },
+    "description": {
+      "type": "string",
+      "description": "Text om vad som utf\u00f6rts vid servicen"
+    },
+    "cost": {
+      "type": "number",
+      "description": "Kostnad f\u00f6r servicen"
+    },
+    "service_type": {
+      "type": "string",
+      "enum": [
+        "repair",
+        "maintenance",
+        "inspection",
+        "calibration",
+        "replacement_parts",
+        "annual_service"
+      ],
+      "description": "Typ av service"
+    },
+    "parts_used": {
+      "type": "array",
+      "description": "Lista \u00f6ver eventuella delar som anv\u00e4nds",
+      "items": {
+        "type": "object",
+        "properties": {
+          "part_name": {
+            "type": "string"
+          },
+          "quantity": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "part_name",
+          "quantity"
+        ]
+      }
+    }
+  },
+  "required": [
+    "name",
+    "service_type"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin_lokalv\u00e5rd"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin_lokalv\u00e5rd"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin_lokalv\u00e5rd"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin_lokalv\u00e5rd"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        }
+      ]
+    }
+  }
+}
+{
+  "name": "SpreadsheetCell",
+  "type": "object",
+  "properties": {
+    "workbookId": {
+      "type": "string",
+      "description": "Referens till arbetsboken"
+    },
+    "sheetName": {
+      "type": "string",
+      "description": "Namn p\u00e5 kalkylbladet"
+    },
+    "row": {
+      "type": "number",
+      "description": "Radnummer (0-indexerat)"
+    },
+    "column": {
+      "type": "number",
+      "description": "Kolumnnummer (0-indexerat)"
+    },
+    "value": {
+      "type": "string",
+      "description": "Cellens r\u00e5v\u00e4rde"
+    },
+    "formula": {
+      "type": "string",
+      "description": "Formel om cellen inneh\u00e5ller en (t.ex. =SUM(A1:A10))"
+    },
+    "displayValue": {
+      "type": "string",
+      "description": "Det ber\u00e4knade/formaterade v\u00e4rdet att visa"
+    },
+    "format": {
+      "type": "string",
+      "enum": [
+        "general",
+        "currency",
+        "date",
+        "time",
+        "percentage",
+        "number"
+      ],
+      "default": "general",
+      "description": "Visningsformat"
+    },
+    "comment": {
+      "type": "string",
+      "description": "Kommentar p\u00e5 cellen"
+    }
+  },
+  "required": [
+    "workbookId",
+    "sheetName",
+    "row",
+    "column"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        }
+      ]
+    }
+  }
+}
+{
+  "name": "TeamMember",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "email": {
+      "type": "string"
+    },
+    "phone": {
+      "type": "string"
+    },
+    "role": {
+      "type": "string",
+      "enum": [
+        "technician",
+        "apprentice",
+        "contractor",
+        "admin lokalv\u00e5rd",
+        "lokalv\u00e5rdare",
+        "verktygsf\u00f6rvaltare",
+        "admin",
+        "\u00e4gare"
+      ],
+      "default": "lokalv\u00e5rdare"
+    },
+    "default_location_id": {
+      "type": "string"
+    },
+    "default_location_name": {
+      "type": "string"
+    },
+    "location_ids": {
+      "type": "array",
+      "description": "IDs of locations where this team member works",
+      "items": {
+        "type": "string"
+      }
+    },
+    "location_names": {
+      "type": "array",
+      "description": "Names of locations where this team member works",
+      "items": {
+        "type": "string"
+      }
+    },
+    "is_active": {
+      "type": "boolean",
+      "default": true
+    },
+    "avatar_url": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "name"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": {
+      "$or": [
+        {
+          "email": "{{user.email}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "verktygsf\u00f6rvaltare"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin_lokalv\u00e5rd"
+          }
+        }
+      ]
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}
+{
+  "name": "Tool",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Name of the tool"
+    },
+    "manufacturer": {
+      "type": "string",
+      "description": "Manufacturer/brand of the tool"
+    },
+    "model_number": {
+      "type": "string",
+      "description": "Model number"
+    },
+    "serial_number": {
+      "type": "string",
+      "description": "Serial number / Serienummer"
+    },
+    "tool_number": {
+      "type": "string",
+      "description": "Verktygsnummer"
+    },
+    "category": {
+      "type": "string",
+      "description": "Tool category"
+    },
+    "subcategory": {
+      "type": "string",
+      "description": "Tool subcategory"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "available",
+        "in_use",
+        "i_lager",
+        "maintenance",
+        "missing",
+        "retired",
+        "s\u00e5lda"
+      ],
+      "default": "available",
+      "description": "Current status of the tool"
+    },
+    "condition": {
+      "type": "string",
+      "enum": [
+        "new",
+        "good",
+        "fair",
+        "poor"
+      ],
+      "default": "good"
+    },
+    "purchase_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "purchase_price": {
+      "type": "number"
+    },
+    "depreciation_level": {
+      "type": "string",
+      "enum": [
+        "L\u00e5g",
+        "Medel",
+        "H\u00f6g"
+      ],
+      "description": "Deprecieringsniv\u00e5 f\u00f6r maskinen"
+    },
+    "service_cost": {
+      "type": "number",
+      "description": "Servicekostnad per \u00e5r eller period"
+    },
+    "purchase_location": {
+      "type": "string"
+    },
+    "invoice_number": {
+      "type": "string"
+    },
+    "image_url": {
+      "type": "string"
+    },
+    "suggested_image_url": {
+      "type": "string"
+    },
+    "location_id": {
+      "type": "string"
+    },
+    "location_name": {
+      "type": "string"
+    },
+    "assigned_to_email": {
+      "type": "string"
+    },
+    "assigned_to_name": {
+      "type": "string"
+    },
+    "main_machine_id": {
+      "type": "string",
+      "nullable": true
+    },
+    "main_machine_name": {
+      "type": "string",
+      "nullable": true
+    },
+    "compatible_with_main_machine_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "compatible_with_main_machine_names": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "notes": {
+      "type": "string"
+    },
+    "last_seen_date": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "barcode": {
+      "type": "string"
+    },
+    "is_deleted": {
+      "type": "boolean",
+      "default": false,
+      "description": "Mjukradering \u2013 visas i papperskorg"
+    },
+    "deleted_at": {
+      "type": "string",
+      "format": "date-time",
+      "nullable": true,
+      "description": "Tidpunkt f\u00f6r mjukradering"
+    }
+  },
+  "required": [
+    "name",
+    "category"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "verktygsf\u00f6rvaltare"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin_lokalv\u00e5rd"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "verktygsf\u00f6rvaltare"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin_lokalv\u00e5rd"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "verktygsf\u00f6rvaltare"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin_lokalv\u00e5rd"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin_lokalv\u00e5rd"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        }
+      ]
+    }
+  }
+}
+{
+  "name": "ToolLog",
+  "type": "object",
+  "properties": {
+    "tool_id": {
+      "type": "string",
+      "description": "Referens till Tool-entiteten"
+    },
+    "changed_by_email": {
+      "type": "string",
+      "description": "E-post f\u00f6r den som gjorde \u00e4ndringen"
+    },
+    "changed_by_name": {
+      "type": "string",
+      "description": "Namn p\u00e5 den som gjorde \u00e4ndringen"
+    },
+    "change_date": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Datum och tid f\u00f6r \u00e4ndringen"
+    },
+    "field_name": {
+      "type": "string",
+      "description": "Namn p\u00e5 f\u00e4ltet som \u00e4ndrades"
+    },
+    "old_value": {
+      "type": "string",
+      "description": "Det gamla v\u00e4rdet"
+    },
+    "new_value": {
+      "type": "string",
+      "description": "Det nya v\u00e4rdet"
+    },
+    "change_type": {
+      "type": "string",
+      "enum": [
+        "created",
+        "updated"
+      ],
+      "description": "Typ av \u00e4ndring"
+    },
+    "comment": {
+      "type": "string",
+      "description": "Kommentar kopplad till \u00e4ndringen, t.ex. skick vid \u00e5terl\u00e4mning"
+    }
+  },
+  "required": [
+    "tool_id",
+    "changed_by_email",
+    "change_date",
+    "change_type"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "verktygsf\u00f6rvaltare"
+          }
+        },
+        {
+          "created_by": "{{user.email}}"
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "verktygsf\u00f6rvaltare"
+          }
+        }
+      ]
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}
+{
+  "name": "Transfer",
+  "type": "object",
+  "properties": {
+    "tool_id": {
+      "type": "string"
+    },
+    "tool_name": {
+      "type": "string"
+    },
+    "from_location_id": {
+      "type": "string"
+    },
+    "from_location_name": {
+      "type": "string"
+    },
+    "to_location_id": {
+      "type": "string"
+    },
+    "to_location_name": {
+      "type": "string"
+    },
+    "from_person_email": {
+      "type": "string"
+    },
+    "from_person_name": {
+      "type": "string"
+    },
+    "to_person_email": {
+      "type": "string"
+    },
+    "to_person_name": {
+      "type": "string"
+    },
+    "transfer_date": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "expected_return_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "returned_date": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "active",
+        "returned",
+        "overdue"
+      ],
+      "default": "active"
+    },
+    "notes": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "tool_id",
+    "tool_name"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin_lokalv\u00e5rd"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin_lokalv\u00e5rd"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin_lokalv\u00e5rd"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin_lokalv\u00e5rd"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        }
+      ]
+    }
+  }
+}
+{
+  "name": "User",
+  "type": "object",
+  "properties": {
+    "role": {
+      "type": "string",
+      "enum": [
+        "\u00e4gare",
+        "admin",
+        "admin_lokalv\u00e5rd",
+        "verktygsf\u00f6rvaltare",
+        "lokalv\u00e5rdare"
+      ],
+      "default": "verktygsf\u00f6rvaltare",
+      "description": "Anv\u00e4ndarens roll i systemet"
+    },
+    "is_active": {
+      "type": "boolean",
+      "default": true,
+      "description": "Om anv\u00e4ndaren \u00e4r aktiv eller inaktiverad"
+    },
+    "bottom_nav_shortcuts": {
+      "type": "array",
+      "description": "Anv\u00e4ndarens valda genv\u00e4gar i bottenmenyn (max 5)",
+      "items": {
+        "type": "object",
+        "properties": {
+          "path": {
+            "type": "string"
+          },
+          "label": {
+            "type": "string"
+          },
+          "icon": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  },
+  "required": []
+}
+{
+  "name": "Uttag",
+  "type": "object",
+  "properties": {
+    "datum": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Datum och tid f\u00f6r uttaget"
+    },
+    "personal_id": {
+      "type": "string",
+      "description": "ID f\u00f6r personalen som gjorde uttaget (referens till TeamMember)"
+    },
+    "personal_namn": {
+      "type": "string",
+      "description": "Namn p\u00e5 personalen som gjorde uttaget"
+    },
+    "kund_id": {
+      "type": "string",
+      "description": "ID f\u00f6r kunden som uttaget gjordes f\u00f6r (referens till Kund)"
+    },
+    "kund_namn": {
+      "type": "string",
+      "description": "Namn p\u00e5 kunden"
+    },
+    "ordernummer": {
+      "type": "string",
+      "description": "Valfritt ordernummer",
+      "nullable": true
+    },
+    "artiklar": {
+      "type": "array",
+      "description": "Lista \u00f6ver artiklar som ingick i uttaget",
+      "items": {
+        "type": "object",
+        "properties": {
+          "artikel_id": {
+            "type": "string",
+            "description": "ID f\u00f6r den uttagna artikeln (referens till LokalvardsArtikel)"
+          },
+          "benamning": {
+            "type": "string",
+            "description": "Ben\u00e4mning p\u00e5 den uttagna artikeln"
+          },
+          "antal": {
+            "type": "number",
+            "description": "Antal av denna artikel som plockades ut"
+          },
+          "pris_per_enhet": {
+            "type": "number",
+            "description": "Pris per enhet vid uttagstillf\u00e4llet"
+          },
+          "total_pris": {
+            "type": "number",
+            "description": "Totalt pris f\u00f6r denna artikel i uttaget (antal * pris_per_enhet)"
+          }
+        },
+        "required": [
+          "artikel_id",
+          "benamning",
+          "antal",
+          "pris_per_enhet"
+        ]
+      }
+    },
+    "total_kostnad": {
+      "type": "number",
+      "description": "Total kostnad f\u00f6r hela uttaget"
+    },
+    "manad": {
+      "type": "string",
+      "description": "M\u00e5naden uttaget gjordes (YYYY-MM)",
+      "pattern": "^\\d{4}-\\d{2}$"
+    }
+  },
+  "required": [
+    "datum",
+    "personal_id",
+    "personal_namn",
+    "kund_id",
+    "kund_namn",
+    "artiklar",
+    "total_kostnad",
+    "manad"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin_lokalv\u00e5rd"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin_lokalv\u00e5rd"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin_lokalv\u00e5rd"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin_lokalv\u00e5rd"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "\u00e4gare"
+          }
+        }
+      ]
+    }
+  }
+}
