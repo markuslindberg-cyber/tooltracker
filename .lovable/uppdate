@@ -1,0 +1,12 @@
+{
+  "name": "ToolTracker Pro",
+  "site": {
+    "installCommand": "npm install",
+    "buildCommand": "npm run build",
+    "serveCommand": "npm run dev",
+    "outputDirectory": "./dist"
+  }
+}
+{
+  "id": "69411a4435e82160527c0037"
+}
