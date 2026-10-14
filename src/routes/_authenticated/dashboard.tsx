@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { Wrench, Hammer, Truck, Shirt, AlertCircle, ArrowLeftRight } from "lucide-react";
@@ -16,15 +16,6 @@ const statDefs = [
   { label: "Lokalvårdsartiklar", table: "lokalvards_artiklar", del: true, icon: Shirt, color: "text-primary" },
   { label: "Uttag", table: "uttag", icon: ArrowLeftRight, color: "text-primary" },
   { label: "Väntande begäran", table: "lokalvard_artikel_requests", pending: true, icon: AlertCircle, color: "text-destructive" },
-];
-void 0;
-const _old = [
-  { label: "Maskiner", value: "—", icon: Wrench, color: "text-blue-600" },
-  { label: "Handredskap", value: "—", icon: Hammer, color: "text-green-600" },
-  { label: "Huvudmaskiner", value: "—", icon: Truck, color: "text-orange-600" },
-  { label: "Arbetskläder", value: "—", icon: Shirt, color: "text-purple-600" },
-  { label: "Aktiva flyttar", value: "—", icon: ArrowLeftRight, color: "text-amber-600" },
-  { label: "Väntar godkännande", value: "—", icon: AlertCircle, color: "text-red-600" },
 ];
 
 function DashboardPage() {
