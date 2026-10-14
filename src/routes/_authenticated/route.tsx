@@ -47,6 +47,9 @@ const navGroups: { title: string; items: NavItem[] }[] = [
       { to: "/handtools", label: "Handredskap", icon: Hammer },
       { to: "/huvudmaskiner", label: "Huvudmaskiner", icon: Truck },
       { to: "/transfers", label: "Flyttar", icon: ArrowLeftRight },
+      { to: "/loans", label: "Lån", icon: ArrowLeftRight },
+      { to: "/service", label: "Service", icon: Settings },
+      { to: "/inventering", label: "Inventering", icon: LayoutDashboard },
     ],
   },
   {
@@ -61,6 +64,8 @@ const navGroups: { title: string; items: NavItem[] }[] = [
       { to: "/lokalvard/lager", label: "Lager", icon: Sparkles },
       { to: "/lokalvard/uttag", label: "Uttag", icon: ArrowLeftRight },
       { to: "/lokalvard/kunder", label: "Kunder", icon: Users },
+      { to: "/lokalvard/inkop", label: "Inköp", icon: Truck },
+      { to: "/lokalvard/begaran", label: "Begäran", icon: Sparkles },
     ],
   },
   {
@@ -68,7 +73,7 @@ const navGroups: { title: string; items: NavItem[] }[] = [
     items: [
       { to: "/locations", label: "Platser", icon: MapPin },
       { to: "/team", label: "Personal", icon: Users },
-      { to: "/admin", label: "Inställningar", icon: Settings },
+      { to: "/admin", label: "Logg", icon: Settings },
     ],
   },
 ];
