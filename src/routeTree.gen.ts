@@ -12,7 +12,23 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthenticatedTransfersRouteImport } from './routes/_authenticated/transfers'
+import { Route as AuthenticatedTeamRouteImport } from './routes/_authenticated/team'
+import { Route as AuthenticatedServiceRouteImport } from './routes/_authenticated/service'
+import { Route as AuthenticatedLocationsRouteImport } from './routes/_authenticated/locations'
+import { Route as AuthenticatedLoansRouteImport } from './routes/_authenticated/loans'
+import { Route as AuthenticatedInventoryRouteImport } from './routes/_authenticated/inventory'
+import { Route as AuthenticatedInventeringRouteImport } from './routes/_authenticated/inventering'
+import { Route as AuthenticatedHuvudmaskinerRouteImport } from './routes/_authenticated/huvudmaskiner'
+import { Route as AuthenticatedHandtoolsRouteImport } from './routes/_authenticated/handtools'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
+import { Route as AuthenticatedArbetskladerRouteImport } from './routes/_authenticated/arbetsklader'
+import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
+import { Route as AuthenticatedLokalvardUttagRouteImport } from './routes/_authenticated/lokalvard/uttag'
+import { Route as AuthenticatedLokalvardLagerRouteImport } from './routes/_authenticated/lokalvard/lager'
+import { Route as AuthenticatedLokalvardKunderRouteImport } from './routes/_authenticated/lokalvard/kunder'
+import { Route as AuthenticatedLokalvardInkopRouteImport } from './routes/_authenticated/lokalvard/inkop'
+import { Route as AuthenticatedLokalvardBegaranRouteImport } from './routes/_authenticated/lokalvard/begaran'
 
 const AuthRoute = AuthRouteImport.update({
   id: '/auth',
@@ -28,40 +44,230 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedTransfersRoute = AuthenticatedTransfersRouteImport.update({
+  id: '/transfers',
+  path: '/transfers',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedTeamRoute = AuthenticatedTeamRouteImport.update({
+  id: '/team',
+  path: '/team',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedServiceRoute = AuthenticatedServiceRouteImport.update({
+  id: '/service',
+  path: '/service',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedLocationsRoute = AuthenticatedLocationsRouteImport.update({
+  id: '/locations',
+  path: '/locations',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedLoansRoute = AuthenticatedLoansRouteImport.update({
+  id: '/loans',
+  path: '/loans',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedInventoryRoute = AuthenticatedInventoryRouteImport.update({
+  id: '/inventory',
+  path: '/inventory',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedInventeringRoute =
+  AuthenticatedInventeringRouteImport.update({
+    id: '/inventering',
+    path: '/inventering',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedHuvudmaskinerRoute =
+  AuthenticatedHuvudmaskinerRouteImport.update({
+    id: '/huvudmaskiner',
+    path: '/huvudmaskiner',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedHandtoolsRoute = AuthenticatedHandtoolsRouteImport.update({
+  id: '/handtools',
+  path: '/handtools',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedArbetskladerRoute =
+  AuthenticatedArbetskladerRouteImport.update({
+    id: '/arbetsklader',
+    path: '/arbetsklader',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedAdminRoute = AuthenticatedAdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedLokalvardUttagRoute =
+  AuthenticatedLokalvardUttagRouteImport.update({
+    id: '/lokalvard/uttag',
+    path: '/lokalvard/uttag',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedLokalvardLagerRoute =
+  AuthenticatedLokalvardLagerRouteImport.update({
+    id: '/lokalvard/lager',
+    path: '/lokalvard/lager',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedLokalvardKunderRoute =
+  AuthenticatedLokalvardKunderRouteImport.update({
+    id: '/lokalvard/kunder',
+    path: '/lokalvard/kunder',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedLokalvardInkopRoute =
+  AuthenticatedLokalvardInkopRouteImport.update({
+    id: '/lokalvard/inkop',
+    path: '/lokalvard/inkop',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedLokalvardBegaranRoute =
+  AuthenticatedLokalvardBegaranRouteImport.update({
+    id: '/lokalvard/begaran',
+    path: '/lokalvard/begaran',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/admin': typeof AuthenticatedAdminRoute
+  '/arbetsklader': typeof AuthenticatedArbetskladerRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
+  '/handtools': typeof AuthenticatedHandtoolsRoute
+  '/huvudmaskiner': typeof AuthenticatedHuvudmaskinerRoute
+  '/inventering': typeof AuthenticatedInventeringRoute
+  '/inventory': typeof AuthenticatedInventoryRoute
+  '/loans': typeof AuthenticatedLoansRoute
+  '/locations': typeof AuthenticatedLocationsRoute
+  '/service': typeof AuthenticatedServiceRoute
+  '/team': typeof AuthenticatedTeamRoute
+  '/transfers': typeof AuthenticatedTransfersRoute
+  '/lokalvard/begaran': typeof AuthenticatedLokalvardBegaranRoute
+  '/lokalvard/inkop': typeof AuthenticatedLokalvardInkopRoute
+  '/lokalvard/kunder': typeof AuthenticatedLokalvardKunderRoute
+  '/lokalvard/lager': typeof AuthenticatedLokalvardLagerRoute
+  '/lokalvard/uttag': typeof AuthenticatedLokalvardUttagRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/admin': typeof AuthenticatedAdminRoute
+  '/arbetsklader': typeof AuthenticatedArbetskladerRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
+  '/handtools': typeof AuthenticatedHandtoolsRoute
+  '/huvudmaskiner': typeof AuthenticatedHuvudmaskinerRoute
+  '/inventering': typeof AuthenticatedInventeringRoute
+  '/inventory': typeof AuthenticatedInventoryRoute
+  '/loans': typeof AuthenticatedLoansRoute
+  '/locations': typeof AuthenticatedLocationsRoute
+  '/service': typeof AuthenticatedServiceRoute
+  '/team': typeof AuthenticatedTeamRoute
+  '/transfers': typeof AuthenticatedTransfersRoute
+  '/lokalvard/begaran': typeof AuthenticatedLokalvardBegaranRoute
+  '/lokalvard/inkop': typeof AuthenticatedLokalvardInkopRoute
+  '/lokalvard/kunder': typeof AuthenticatedLokalvardKunderRoute
+  '/lokalvard/lager': typeof AuthenticatedLokalvardLagerRoute
+  '/lokalvard/uttag': typeof AuthenticatedLokalvardUttagRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
+  '/_authenticated/admin': typeof AuthenticatedAdminRoute
+  '/_authenticated/arbetsklader': typeof AuthenticatedArbetskladerRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
+  '/_authenticated/handtools': typeof AuthenticatedHandtoolsRoute
+  '/_authenticated/huvudmaskiner': typeof AuthenticatedHuvudmaskinerRoute
+  '/_authenticated/inventering': typeof AuthenticatedInventeringRoute
+  '/_authenticated/inventory': typeof AuthenticatedInventoryRoute
+  '/_authenticated/loans': typeof AuthenticatedLoansRoute
+  '/_authenticated/locations': typeof AuthenticatedLocationsRoute
+  '/_authenticated/service': typeof AuthenticatedServiceRoute
+  '/_authenticated/team': typeof AuthenticatedTeamRoute
+  '/_authenticated/transfers': typeof AuthenticatedTransfersRoute
+  '/_authenticated/lokalvard/begaran': typeof AuthenticatedLokalvardBegaranRoute
+  '/_authenticated/lokalvard/inkop': typeof AuthenticatedLokalvardInkopRoute
+  '/_authenticated/lokalvard/kunder': typeof AuthenticatedLokalvardKunderRoute
+  '/_authenticated/lokalvard/lager': typeof AuthenticatedLokalvardLagerRoute
+  '/_authenticated/lokalvard/uttag': typeof AuthenticatedLokalvardUttagRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/auth' | '/dashboard'
+  fullPaths:
+    | '/'
+    | '/auth'
+    | '/admin'
+    | '/arbetsklader'
+    | '/dashboard'
+    | '/handtools'
+    | '/huvudmaskiner'
+    | '/inventering'
+    | '/inventory'
+    | '/loans'
+    | '/locations'
+    | '/service'
+    | '/team'
+    | '/transfers'
+    | '/lokalvard/begaran'
+    | '/lokalvard/inkop'
+    | '/lokalvard/kunder'
+    | '/lokalvard/lager'
+    | '/lokalvard/uttag'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/auth' | '/dashboard'
+  to:
+    | '/'
+    | '/auth'
+    | '/admin'
+    | '/arbetsklader'
+    | '/dashboard'
+    | '/handtools'
+    | '/huvudmaskiner'
+    | '/inventering'
+    | '/inventory'
+    | '/loans'
+    | '/locations'
+    | '/service'
+    | '/team'
+    | '/transfers'
+    | '/lokalvard/begaran'
+    | '/lokalvard/inkop'
+    | '/lokalvard/kunder'
+    | '/lokalvard/lager'
+    | '/lokalvard/uttag'
   id:
     | '__root__'
     | '/'
     | '/_authenticated'
     | '/auth'
+    | '/_authenticated/admin'
+    | '/_authenticated/arbetsklader'
     | '/_authenticated/dashboard'
+    | '/_authenticated/handtools'
+    | '/_authenticated/huvudmaskiner'
+    | '/_authenticated/inventering'
+    | '/_authenticated/inventory'
+    | '/_authenticated/loans'
+    | '/_authenticated/locations'
+    | '/_authenticated/service'
+    | '/_authenticated/team'
+    | '/_authenticated/transfers'
+    | '/_authenticated/lokalvard/begaran'
+    | '/_authenticated/lokalvard/inkop'
+    | '/_authenticated/lokalvard/kunder'
+    | '/_authenticated/lokalvard/lager'
+    | '/_authenticated/lokalvard/uttag'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -93,6 +299,69 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/transfers': {
+      id: '/_authenticated/transfers'
+      path: '/transfers'
+      fullPath: '/transfers'
+      preLoaderRoute: typeof AuthenticatedTransfersRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/team': {
+      id: '/_authenticated/team'
+      path: '/team'
+      fullPath: '/team'
+      preLoaderRoute: typeof AuthenticatedTeamRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/service': {
+      id: '/_authenticated/service'
+      path: '/service'
+      fullPath: '/service'
+      preLoaderRoute: typeof AuthenticatedServiceRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/locations': {
+      id: '/_authenticated/locations'
+      path: '/locations'
+      fullPath: '/locations'
+      preLoaderRoute: typeof AuthenticatedLocationsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/loans': {
+      id: '/_authenticated/loans'
+      path: '/loans'
+      fullPath: '/loans'
+      preLoaderRoute: typeof AuthenticatedLoansRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/inventory': {
+      id: '/_authenticated/inventory'
+      path: '/inventory'
+      fullPath: '/inventory'
+      preLoaderRoute: typeof AuthenticatedInventoryRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/inventering': {
+      id: '/_authenticated/inventering'
+      path: '/inventering'
+      fullPath: '/inventering'
+      preLoaderRoute: typeof AuthenticatedInventeringRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/huvudmaskiner': {
+      id: '/_authenticated/huvudmaskiner'
+      path: '/huvudmaskiner'
+      fullPath: '/huvudmaskiner'
+      preLoaderRoute: typeof AuthenticatedHuvudmaskinerRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/handtools': {
+      id: '/_authenticated/handtools'
+      path: '/handtools'
+      fullPath: '/handtools'
+      preLoaderRoute: typeof AuthenticatedHandtoolsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/dashboard': {
       id: '/_authenticated/dashboard'
       path: '/dashboard'
@@ -100,15 +369,96 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedDashboardRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/arbetsklader': {
+      id: '/_authenticated/arbetsklader'
+      path: '/arbetsklader'
+      fullPath: '/arbetsklader'
+      preLoaderRoute: typeof AuthenticatedArbetskladerRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/admin': {
+      id: '/_authenticated/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AuthenticatedAdminRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/lokalvard/uttag': {
+      id: '/_authenticated/lokalvard/uttag'
+      path: '/lokalvard/uttag'
+      fullPath: '/lokalvard/uttag'
+      preLoaderRoute: typeof AuthenticatedLokalvardUttagRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/lokalvard/lager': {
+      id: '/_authenticated/lokalvard/lager'
+      path: '/lokalvard/lager'
+      fullPath: '/lokalvard/lager'
+      preLoaderRoute: typeof AuthenticatedLokalvardLagerRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/lokalvard/kunder': {
+      id: '/_authenticated/lokalvard/kunder'
+      path: '/lokalvard/kunder'
+      fullPath: '/lokalvard/kunder'
+      preLoaderRoute: typeof AuthenticatedLokalvardKunderRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/lokalvard/inkop': {
+      id: '/_authenticated/lokalvard/inkop'
+      path: '/lokalvard/inkop'
+      fullPath: '/lokalvard/inkop'
+      preLoaderRoute: typeof AuthenticatedLokalvardInkopRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/lokalvard/begaran': {
+      id: '/_authenticated/lokalvard/begaran'
+      path: '/lokalvard/begaran'
+      fullPath: '/lokalvard/begaran'
+      preLoaderRoute: typeof AuthenticatedLokalvardBegaranRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
   }
 }
 
 interface AuthenticatedRouteRouteChildren {
+  AuthenticatedAdminRoute: typeof AuthenticatedAdminRoute
+  AuthenticatedArbetskladerRoute: typeof AuthenticatedArbetskladerRoute
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
+  AuthenticatedHandtoolsRoute: typeof AuthenticatedHandtoolsRoute
+  AuthenticatedHuvudmaskinerRoute: typeof AuthenticatedHuvudmaskinerRoute
+  AuthenticatedInventeringRoute: typeof AuthenticatedInventeringRoute
+  AuthenticatedInventoryRoute: typeof AuthenticatedInventoryRoute
+  AuthenticatedLoansRoute: typeof AuthenticatedLoansRoute
+  AuthenticatedLocationsRoute: typeof AuthenticatedLocationsRoute
+  AuthenticatedServiceRoute: typeof AuthenticatedServiceRoute
+  AuthenticatedTeamRoute: typeof AuthenticatedTeamRoute
+  AuthenticatedTransfersRoute: typeof AuthenticatedTransfersRoute
+  AuthenticatedLokalvardBegaranRoute: typeof AuthenticatedLokalvardBegaranRoute
+  AuthenticatedLokalvardInkopRoute: typeof AuthenticatedLokalvardInkopRoute
+  AuthenticatedLokalvardKunderRoute: typeof AuthenticatedLokalvardKunderRoute
+  AuthenticatedLokalvardLagerRoute: typeof AuthenticatedLokalvardLagerRoute
+  AuthenticatedLokalvardUttagRoute: typeof AuthenticatedLokalvardUttagRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedAdminRoute: AuthenticatedAdminRoute,
+  AuthenticatedArbetskladerRoute: AuthenticatedArbetskladerRoute,
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
+  AuthenticatedHandtoolsRoute: AuthenticatedHandtoolsRoute,
+  AuthenticatedHuvudmaskinerRoute: AuthenticatedHuvudmaskinerRoute,
+  AuthenticatedInventeringRoute: AuthenticatedInventeringRoute,
+  AuthenticatedInventoryRoute: AuthenticatedInventoryRoute,
+  AuthenticatedLoansRoute: AuthenticatedLoansRoute,
+  AuthenticatedLocationsRoute: AuthenticatedLocationsRoute,
+  AuthenticatedServiceRoute: AuthenticatedServiceRoute,
+  AuthenticatedTeamRoute: AuthenticatedTeamRoute,
+  AuthenticatedTransfersRoute: AuthenticatedTransfersRoute,
+  AuthenticatedLokalvardBegaranRoute: AuthenticatedLokalvardBegaranRoute,
+  AuthenticatedLokalvardInkopRoute: AuthenticatedLokalvardInkopRoute,
+  AuthenticatedLokalvardKunderRoute: AuthenticatedLokalvardKunderRoute,
+  AuthenticatedLokalvardLagerRoute: AuthenticatedLokalvardLagerRoute,
+  AuthenticatedLokalvardUttagRoute: AuthenticatedLokalvardUttagRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =
@@ -122,3 +472,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
